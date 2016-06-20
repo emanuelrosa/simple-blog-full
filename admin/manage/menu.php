@@ -111,6 +111,7 @@
                 <li>
                     <a href="#"><i class="fa fa-briefcase"></i> Institucional<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a href="?top">Imagem Topo</a></li>
                         <li><a href="?about">Sobre o site</a></li>
                         <li><a href="?social">Redes sociais</a></li>
                         <li><a href="?terms">Termos de uso</a></li>

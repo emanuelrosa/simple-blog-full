@@ -8,43 +8,55 @@
 class Social {
 
     private $_idsocial;
-    private $_instagram;
     private $_facebook;
-    private $_google;
+    private $_twitter;
+    private $_whatsapp;
     private $_youtube;
+    private $_instagram;
+    private $_google;
     private $_pinterest;
 
     function __construct() {
-        $this->setAlConstruct(NULL, NULL, NULL, NULL, NULL, NULL);
+        $this->setAlConstruct(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    function setAlConstruct($idsocial, $instagram, $facebook, $google, $youtube, $pinterest) {
-        $this->_idsocial = $idsocial;
-        $this->_instagram = $instagram;
-        $this->_facebook = $facebook;
-        $this->_google = $google;
-        $this->_youtube = $youtube;
-        $this->_pinterest = $pinterest;
+    function setAlConstruct($_idsocial, $_facebook, $_twitter, $_whatsapp, $_youtube, $_instagram, $_google, $_pinterest) {
+        $this->_idsocial = $_idsocial;
+        $this->_facebook = $_facebook;
+        $this->_twitter = $_twitter;
+        $this->_whatsapp = $_whatsapp;
+        $this->_youtube = $_youtube;
+        $this->_instagram = $_instagram;
+        $this->_google = $_google;
+        $this->_pinterest = $_pinterest;
     }
 
     function getIdsocial() {
         return $this->_idsocial;
     }
 
-    function getInstagram() {
-        return $this->_instagram;
-    }
-
     function getFacebook() {
         return $this->_facebook;
     }
 
-    function getGoogle() {
-        return $this->_google;
+    function getTwitter() {
+        return $this->_twitter;
+    }
+
+    function getWhatsapp() {
+        return $this->_whatsapp;
     }
 
     function getYoutube() {
         return $this->_youtube;
+    }
+
+    function getInstagram() {
+        return $this->_instagram;
+    }
+
+    function getGoogle() {
+        return $this->_google;
     }
 
     function getPinterest() {
@@ -55,20 +67,28 @@ class Social {
         $this->_idsocial = $idsocial;
     }
 
-    function setInstagram($instagram) {
-        $this->_instagram = $instagram;
-    }
-
     function setFacebook($facebook) {
         $this->_facebook = $facebook;
     }
 
-    function setGoogle($google) {
-        $this->_google = $google;
+    function setTwitter($twitter) {
+        $this->_twitter = $twitter;
+    }
+
+    function setWhatsapp($whatsapp) {
+        $this->_whatsapp = $whatsapp;
     }
 
     function setYoutube($youtube) {
         $this->_youtube = $youtube;
+    }
+
+    function setInstagram($instagram) {
+        $this->_instagram = $instagram;
+    }
+
+    function setGoogle($google) {
+        $this->_google = $google;
     }
 
     function setPinterest($pinterest) {
@@ -77,10 +97,12 @@ class Social {
 
     public function __toString() {
         return "ID: " . $this->_idsocial
-                . " | instagram: " . $this->_instagram
                 . " | facebook: " . $this->_facebook
-                . " | google: " . $this->_google
+                . " | twitter: " . $this->_twitter
+                . " | whatsapp: " . $this->_whatsapp
                 . " | youtube: " . $this->_youtube
+                . " | instagram: " . $this->_instagram
+                . " | google: " . $this->_google
                 . " | pinterest: " . $this->_pinterest
                 . " \n";
     }

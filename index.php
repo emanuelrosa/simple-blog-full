@@ -18,12 +18,12 @@ include_once './config.php';
         <meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_1}"/>
         <meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_2}"/>
 
-        <!-- fav and touch icons -->
-        <link rel="shortcut icon" href=./assets/images/ico/favicon.ico" type="image/x-icon" />
+        <!-- fav and touch icons 
+        <link rel="shortcut icon" href="./assets/images/ico/favicon.ico" type="image/x-icon" />
         <link rel="icon" href="./assets/images/ico/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="./assets/images/ico/apple-icon.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="./assets/images/ico/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="./assets/images/ico/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="./assets/images/ico/apple-icon-114x114.png" />-->
 
         <!-- CSS -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">

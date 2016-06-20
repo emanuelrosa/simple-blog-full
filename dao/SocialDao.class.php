@@ -15,15 +15,17 @@ class SocialDao {
 
     function editSocial(Social $s) {
         try {
-            $stmt = $this->p->prepare("UPDATE `social` SET `instagram` = ?, "
-                    . "`facebook` = ?, `google` = ?, `youtube` = ?, "
-                    . "`pinterest` = ? WHERE `idsocial` = ?");
-            $stmt->bindValue(1, $s->getInstagram());
-            $stmt->bindValue(2, $s->getFacebook());
-            $stmt->bindValue(3, $s->getGoogle());
+            $stmt = $this->p->prepare("UPDATE `social` SET `facebook` = ?, 
+                `twitter` = ?, `whatsapp` = ?,  `youtube` = ?, 
+                `instagram` = ?, `google` = ?, `pinterest` = ? WHERE `idsocial` = ?");
+            $stmt->bindValue(1, $s->getFacebook());
+            $stmt->bindValue(2, $s->getTwitter());
+            $stmt->bindValue(3, $s->getWhatsapp());
             $stmt->bindValue(4, $s->getYoutube());
-            $stmt->bindValue(5, $s->getPinterest());
-            $stmt->bindValue(6, $s->getIdsocial());
+            $stmt->bindValue(5, $s->getInstagram());
+            $stmt->bindValue(6, $s->getGoogle());
+            $stmt->bindValue(7, $s->getPinterest());
+            $stmt->bindValue(8, $s->getIdsocial());
 
             $rs = $stmt->execute();
 
@@ -41,7 +43,7 @@ class SocialDao {
 
             $s = new Social();
             foreach ($stmt as $row) {
-                $s->setAlConstruct($row['idsocial'], $row['instagram'], $row['facebook'], $row['google'], $row['youtube'], $row['pinterest']);
+                $s->setAlConstruct($row['idsocial'], $row['facebook'], $row['twitter'], $row['whatsapp'], $row['youtube'], $row['instagram'], $row['google'], $row['pinterest']);
             }
 
             $this->p = null;

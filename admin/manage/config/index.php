@@ -1,3 +1,9 @@
+<?php
+$c = new Config();
+$cdao = new ConfigDao();
+
+$c = $cdao->getConfig();
+?>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Configurações</h1>
@@ -10,10 +16,9 @@
             <div class="panel-heading">Editar configurações</div>
             <div class="panel-body">
                 <div class="row">
+                    <div id="success-msg" class="col-md-12"></div>
                     <div id="error-msg" class="col-md-12"></div>
                 </div>
-
-
 
                 <div class="row">
                     <div class="col-md-12">
@@ -42,3 +47,6 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript -->
+<script src="../../assets/js/config.js"></script>

@@ -76,6 +76,9 @@ include './config.php';
                     case "config":
                         include_once './config/index.php';
                         break;
+                    case "top":
+                        include_once './institucional/top.php';
+                        break;
                     case "about":
                         include_once './institucional/sobre.php';
                         break;
@@ -105,9 +108,6 @@ include './config.php';
 
         </div>
         <!-- /#wrapper -->
-
-        <!-- jQuery -->
-        <script src="../../assets/js/jquery-1.11.1.min.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="../../assets/js/bootstrap.min.js"></script>

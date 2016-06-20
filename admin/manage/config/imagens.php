@@ -1,96 +1,129 @@
-<form id="formconfig" action="./actions/config.php" method="post">
+<?php
+$imglogo = "default_logo.png";
+if ($c->getImglogo() != "") {
+    $imglogo = $c->getImglogo();
+}
+
+$imgPainelAdm = "default_adm.png";
+if ($c->getImglogoadmin() != "") {
+    $imgPainelAdm = $c->getImglogoadmin();
+}
+
+$imgBannerFacebook = "default_ban.png";
+if ($c->getImgsocial() != "") {
+    $imgBannerFacebook = $c->getImgsocial();
+}
+
+$imgGif = "default_gif.png";
+if ($c->getGifload() != "") {
+    $imgGif = $c->getGifload();
+}
+?>
+
+<form id="formconfigimg" action="./actions/config.php" method="post">
     <div class="form-group">
-        <div class='row'>
+        <div class='row' style="margin-top: 20px;">
             <div class='col-md-6'>
-                <div id="img"></div>
-                <div id="fileimg" class="form-group">
+                
+                <div id="fileimglogo" class="form-group">
                     <label for="inputimagem">Logo site</label>
-                    <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
                     <div class="image-upload" align='center'>
-                        <label for="inputimg">
-                            <img id="imgban" src="../../assets/images/logo/logo150x55.png" width="100%"/>
+                        <label for="inputimglogo">
+                            <img id="imgimglogo" src="../../assets/images/config_img/<?= $imglogo; ?>" width="100%"/>
                         </label>
 
-                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="" />
+                        <input type="file" accept="image/*" name="inputimglogo" id="inputimglogo" value=""  />
                     </div>
-                    <!-- preview image ban-->
-                    <div id="previewimgban">
+
+                    <!-- preview image logo-->
+                    <div id="previewimglogo">
                         <div id="previewimg-row" class="previewimg"  align='center'>
-                            <img src="#" id="previewimg" width="100%" >
+                            <img src="#" id="previewimg" width="150" >
                         </div>
                     </div>
-                    <div><button id="btn-removerimg" class="btn btn-sm btn-danger">Remover imagem</button></div>
+                    <p class="help-block">Somente imagens nas dimensões 150x55.</p>
+                    <div><button id="btn-removerimglogo" class="btn btn-sm btn-danger">Remover imagem</button></div>
 
                 </div>
             </div>
+            <!-- ./configurar imagem logo -->
+
             <div class='col-md-6'>
-                <div id="img"></div>
-                <div id="fileimg" class="form-group">
-                    <label for="inputimagem">Escolha a imagem Painel Admin</label>
-                    <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
+                
+                <div id="fileimgadm" class="form-group">
+                    <label for="inputimagem">Escolha imagem painel admin</label>
                     <div class="image-upload" align='center'>
-                        <label for="inputimg">
-                            <img id="imgban" src="../../assets/images/logo/logotopadmin.png" width="100%"/>
+                        <label for="inputimgadm">
+                            <img id="imgimgadm" src="../../assets/images/config_img/<?= $imgPainelAdm; ?>" width="100%"/>
                         </label>
 
-                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="" />
+                        <input type="file" accept="image/*" name="inputimgadm" id="inputimgadm" value=""  />
                     </div>
-                    <!-- preview image ban-->
-                    <div id="previewimgban">
+
+                    <!-- preview image logo-->
+                    <div id="previewimgpaineladimin">
                         <div id="previewimg-row" class="previewimg"  align='center'>
-                            <img src="#" id="previewimg" width="100%" >
+                            <img src="#" id="previewimg" width="200" >
                         </div>
                     </div>
-                    <div><button id="btn-removerimg" class="btn btn-sm btn-danger">Remover imagem</button></div>
+                    <p class="help-block">Somente imagens nas dimensões 200x36.</p>
+                    <div><button id="btn-removerimgadm" class="btn btn-sm btn-danger">Remover imagem</button></div>
 
                 </div>
             </div>
+            <!-- ./configurar imagem área admin -->
         </div>
         <div class='row'>
             <div class='col-md-6'>
-                <div id="img"></div>
-                <div id="fileimg" class="form-group">
-                    <label for="inputimagem">Banner divulgação site</label>
-                    <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
+                
+                <div id="fileimgban" class="form-group">
+                    <label for="inputimagem">Banner de divulgação site</label>
                     <div class="image-upload" align='center'>
-                        <label for="inputimg">
-                            <img id="imgban" src="../../../assets/images/img-face.jpg" width="100%"/>
+                        <label for="inputimgban">
+                            <img id="imgimgban" src="../../assets/images/config_img/<?= $imgBannerFacebook; ?>" width="100%"/>
                         </label>
 
-                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="" />
+                        <input type="file" accept="image/*" name="inputimgban" id="inputimgban" value=""  />
                     </div>
-                    <!-- preview image ban-->
+
+                    <!-- preview image -->
                     <div id="previewimgban">
                         <div id="previewimg-row" class="previewimg"  align='center'>
                             <img src="#" id="previewimg" width="100%" >
                         </div>
                     </div>
-                    <div><button id="btn-removerimg" class="btn btn-sm btn-danger">Remover imagem</button></div>
+                    <p class="help-block">Somente imagens nas dimensões 1200x628.<br>
+                        Esta imagem é  utilizada ao compartilhar o site.</p>
+                    <div><button id="btn-removerimgban" class="btn btn-sm btn-danger">Remover imagem</button></div>
 
                 </div>
             </div>
+            <!-- ./configurar imagem banner divulgacao site -->
             <div class='col-md-6'>
-                <div id="img"></div>
-                <div id="fileimg" class="form-group">
-                    <label for="inputimagem">GIF loading</label>
-                    <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
+                
+                <div id="fileimggif" class="form-group">
+                    <label for="inputimagem">Gif prelooading de página</label>
                     <div class="image-upload" align='center'>
-                        <label for="inputimg">
-                            <img id="imgban" src="../../../assets/images/preloader.gif" width="100%"/>
+                        <label for="inputimggif">
+                            <img id="imgimggif" src="../../assets/images/config_img/<?= $imgGif; ?>" width="100"/>
                         </label>
 
-                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="" />
+                        <input type="file" accept="image/*" name="inputimggif" id="inputimggif" value=""  />
                     </div>
-                    <!-- preview image ban-->
-                    <div id="previewimgban">
+
+                    <!-- preview image -->
+                    <div id="previewimggif">
                         <div id="previewimg-row" class="previewimg"  align='center'>
-                            <img src="#" id="previewimg" width="100%" >
+                            <img src="#" id="previewimg" width="100" >
                         </div>
                     </div>
-                    <div><button id="btn-removerimg" class="btn btn-sm btn-danger">Remover imagem</button></div>
+                    <p class="help-block">Adivione .gif com fundo transparente.<br>
+                        Para não aparecer animação de entrada deixe sem animação.</p>
+                    <div><button id="btn-removerimggif" class="btn btn-sm btn-danger">Remover imagem</button></div>
 
                 </div>
             </div>
+            <!-- ./configurar imagem preloader -->
         </div>
     </div>
 
