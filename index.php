@@ -1,22 +1,28 @@
 <?php
 include_once './config.php';
+
+
+//carrega configuracoes gerais
+$config = new Config();
+$cdao = new ConfigDao();
+
+$config = $cdao->getConfig();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="MF Agência é uma empresa empenhada em conectar sua empresa a clientes realmente interessados em seu negócio.">
-        <meta name="author" content="MF Agência Digital">
+        <meta name="description" content="<?= $config->getDescricao(); ?>">
+        <meta name="author" content="<?= $config->getAutor(); ?>">
 
-        <title>MF Agência | Você conectado com o mundo.</title>
+        <title><?= $config->getTitulo(); ?></title>
 
         <!-- meta fecebook -->
-        <meta property="og:image" content="http://www.mfagencia.com.br/assets/images/img-face.jpg" />
+        <meta property="og:image" content=".assets/images/config_img/<?= $config->getImgsocial(); ?>" />
         <meta property="og:image:type" content="image/jpeg">
 
-        <meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_1}"/>
-        <meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_2}"/>
+        <!--<meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_1}"/>-->
 
         <!-- fav and touch icons 
         <link rel="shortcut icon" href="./assets/images/ico/favicon.ico" type="image/x-icon" />
@@ -32,37 +38,53 @@ include_once './config.php';
         <link href="assets/css/simple-line-icons.css" rel="stylesheet" media="screen">
         <link href="assets/css/animate.css" rel="stylesheet">
 
+        <link href="assets/css/jqpagination.css" rel="stylesheet">
+
+
         <!-- Custom styles CSS -->
         <link href="assets/css/style.css" rel="stylesheet" media="screen">
 
         <script src="assets/js/modernizr.custom.js"></script>
 
+        <?= $config->getHeader(); ?>
+
     </head>
     <body>
+        <?= $config->getBody(); ?>
 
-        <!-- Facebook Comments appId:comocriargames.com.br -->
-        <div id="fb-root"></div>
-        <script>(function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1430791703884484";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
+        <!-- Facebook Comments appId -->
+        <?php
+        if (!is_null($config->getAppid_facebook()) || $config->getAppid_facebook() !== "") {
+            ?>
+            <div id="fb-root"></div>
+            <script>(function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id))
+                        return;
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=<?= $config->getAppid_facebook(); ?>";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>                
+            <?php
+        }
 
-        <!-- Preloader
-        <div id="preloader">
-            <div id="status"></div>
-        </div>
-        -->
+
+        if (!is_null($config->getGifload())) {
+            ?>
+            <!-- Preloader -->
+            <div id="preloader">
+                <div id="status" style="background-image: url(./assets/images/config_img/<?= $config->getGifload(); ?>);"></div>
+            </div>
+            <?php
+        }
+        ?>
 
         <!-- Blog start -->
         <!-- Image Top -->
         <div id="home" class="row">
             <div class="col-lg-12">
-                <img src="assets/images/top-default.png" title="" width="100%">
+                <img src="assets/images/config_img/<?= $config->getImgtopo(); ?>" title="" width="100%">
             </div>
         </div>
 
@@ -114,8 +136,8 @@ include_once './config.php';
                 <div class="col-md-4">
 
                     <!-- Social Links -->
-                    
-                    
+
+
                     <!-- Blog Search Well -->
                     <div class="search">
                         <h4>Blog Search</h4>
@@ -219,11 +241,9 @@ include_once './config.php';
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/imagesloaded.pkgd.js"></script>
         <script src="assets/js/jquery.sticky.js"></script>
-        <script src="assets/js/smoothscroll.js"></script>
-        <script src="assets/js/wow.min.js"></script>
-        <script src="assets/js/jquery.easypiechart.js"></script>
-        <script src="assets/js/waypoints.min.js"></script>
         <script src="assets/js/jquery.cbpQTRotator.js"></script>
+
+        <script src="assets/js/jquery.jqpagination.min.js"></script>
         <script src="assets/js/custom.js"></script>
 
     </body>

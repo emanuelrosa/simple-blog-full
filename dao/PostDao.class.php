@@ -247,6 +247,25 @@ class PostDao {
             echo $exc->getMessage();
         }
     }
+    
+    function listAllPostActiveLimit($inicio) {
+        try {
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`,  A.`nome` as `nomeautor`, 
+                C.`nome` AS `nomecategoria` FROM `post` P 
+                LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
+                LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` 
+                LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
+                WHERE P.`estado` = 1 ORDER BY datahora DESC LIMIT $inicio, 5");
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
 
     function listLastFivePostActive() {
         try {

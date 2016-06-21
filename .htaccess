@@ -1,3 +1,4 @@
 RewriteEngine on
 RewriteRule ^admin/$ admin/index.php [NC,L]
+RewriteRule ^\/?page=([0-9]+)\/?$ index.php?page=$1 [NC,L]
 RewriteRule ^([A-za-z-0-9]+)\/?$ index.php?post=$1 [NC,L]

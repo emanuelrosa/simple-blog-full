@@ -1,4 +1,5 @@
 <?php
+
 $slug = $_GET['post'];
 
 $cat = new Categoria();

@@ -11,6 +11,20 @@
 
     $(document).ready(function () {
 
+        $('.container').imagesLoaded();
+
+        $('.pagination').jqPagination({
+            link_string: '/?page=0',
+            max_page: $("#max-page").attr('data-max-page'),
+            paged: function (page) {
+                $("#listaconteudo").load("./?page=" + page + " #listaconteudo", function (response, status, xhr) {
+                    if (status === "success") {
+                        $('html, body').stop().animate({scrollTop: 0}, 1000);
+                    }
+                });
+            }
+        });
+
         /* ---------------------------------------------- /*
          * Smooth scroll / Scroll To Top
          /* ---------------------------------------------- */
