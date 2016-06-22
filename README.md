@@ -1,5 +1,5 @@
 <h2>Créditos</h2>
-<hr>
+
 Criador: Celso Rodrigo de M F
 
 Released under the <a href='https://mit-license.org/'>MIT License</a>.
@@ -10,6 +10,7 @@ Modelo de blog simples com área administrativa para gerenciamento das postagens
 feito em Php + Mysql, com PDO.
 
 Informações gerais: 
+<p>
     Area adminstrativa:
         - Cadastro de categorias
         - Cadastro de autores 
@@ -50,13 +51,22 @@ Informações gerais:
         - Layout simples com imagem no topo, menu de categorias, coluna direita com as postagens
 mostrando imagens e resumo, coluna esquerda contendo área de pesquisa,últimas postagens, melhores
 da semana.
+</p>
 
-ATUALIZAÇÕES 
+
+ATUALIZAÇÕES:
+
+1.1.1
+Atualização em blog
+- Melhorado sistema de paginação do blog
+- Melhorado URL amigáveis
+- Adicionado pesquisa no blog
 
 1.1
 Atualização em blog
 - adicionado paginação em home do blog
 - adicionado listagem de postagens de categorias
+
 
 1.0.2
 Atualização em área administrativa
@@ -65,6 +75,7 @@ Atualização em área administrativa
     - image logo
     - imagem banner para facebook de compartilhamento de blog
     - gif de preload na pagina
+
 
 1.0.1
 Atualização em área administrativa 
@@ -76,6 +87,7 @@ Atualização em área administrativa
     - configurações gerais para comentarios com facebook
         - mostrar quantos comentarios por post
         - appid do facebook
+
 
 1.0
 Blog simples feito em PHP + Mysql + PDO, com área administrativa.

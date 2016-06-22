@@ -26,6 +26,28 @@
         });
 
         /* ---------------------------------------------- /*
+         * Search
+         /* ---------------------------------------------- */
+
+        $("#btn-search").on("click", function () {
+            $("#contentcolumn").load("./search/" + $('#inputsearch').val() + " #contentcolumn", function (response, status, xhr) {
+                if (status === "success") {
+                    $('.pagination').jqPagination({
+                        link_string: '/?page=0',
+                        max_page: $("#max-page").attr('data-max-page'),
+                        paged: function (page) {
+                            $("#listaconteudo").load("./search/" + $('#inputsearch').val() + "/" + page + " #listaconteudo", function (response, status, xhr) {
+                                if (status === "success") {
+                                    $('html, body').stop().animate({scrollTop: 0}, 1000);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        /* ---------------------------------------------- /*
          * Smooth scroll / Scroll To Top
          /* ---------------------------------------------- */
 

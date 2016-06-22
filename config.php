@@ -16,5 +16,6 @@ function __autoload($nomeClasse) {
 
 //URL página atual
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$actual_site = "http://$_SERVER[HTTP_HOST]/blogmodelo.com.br/";
 
 ?>
