@@ -16,13 +16,15 @@ class MensagemDao {
     function inserirMesagem(Mensagem $me) {
         try {
             $stmt = $this->p->prepare("INSERT INTO `mensagem` (`idmensagem`,"
-                    . " `datahora`, `nome`, `email`, `mensagem`, `tipo`, `estado`) "
-                    . "VALUES ( NULL, ?, ?, ?, ?, ?, 0)");
+                    . " `datahora`, `nome`, `email`, `mensagem`, `tipo`, `estado`, visto) "
+                    . "VALUES ( NULL, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bindValue(1, $me->getDatahora());
             $stmt->bindValue(2, $me->getNome());
             $stmt->bindValue(3, $me->getEmail());
             $stmt->bindValue(4, $me->getMensagem());
-            $stmt->bindValue(5, $me->getEstado());
+            $stmt->bindValue(5, $me->getTipo());
+            $stmt->bindValue(6, $me->getEstado());
+            $stmt->bindValue(7, $me->getVisto());
 
             $rs = $stmt->execute();
 
@@ -118,6 +120,15 @@ class MensagemDao {
             echo $exc->getMessage();
         }
     }
+    function listMensagemSiteError() {
+        try {
+            $stmt = $this->p->query("SELECT * FROM `mensagem` WHERE `tipo` = 'E' AND (`visto`IS NULL OR `visto` = 0) ORDER BY `datahora` DESC LIMIT 0 , 5");
+            $this->p = null;
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
 
     function listMensagemErroAberto() {
         try {
@@ -142,6 +153,23 @@ class MensagemDao {
     public function getNewCountMensagemSite() {
         try {
             $stmt = $this->p->query("SELECT COUNT(idmensagem) as cont FROM `mensagem` WHERE `tipo` = 'S' AND (`visto` = '0' OR `visto` IS NULL) ORDER BY `datahora` DESC");
+
+            $rs = 0;
+            foreach ($stmt as $row) {
+                $rs = $row['cont'];
+            }
+
+            $this->p = null;
+
+            return $rs;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+    
+    public function getNewCountMensagemError() {
+        try {
+            $stmt = $this->p->query("SELECT COUNT(idmensagem) as cont FROM `mensagem` WHERE `tipo` = 'E' AND (`visto` = '0' OR `visto` IS NULL) ORDER BY `datahora` DESC");
 
             $rs = 0;
             foreach ($stmt as $row) {

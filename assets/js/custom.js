@@ -98,12 +98,16 @@
 
         $('#contact-form').submit(function (e) {
 
+            $(".loading").css("display", "block");
+
             e.preventDefault();
 
-            var c_name = $('#c_name').val();
-            var c_email = $('#c_email').val();
-            var c_message = $('#c_message ').val();
-            var response = $('#contact-form .ajax-response');
+            var c_name = $("#inputnome").val();
+            var c_email = $("#inputemail").val();
+            var c_message = $("#inputmsg").val();
+            var response = $("#contact-form .ajax-response");
+
+            var formURL = $("#contact-form").attr('action');
 
             var formData = {
                 'name': c_name,
@@ -112,17 +116,69 @@
             };
 
             if ((c_name == '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email))) {
+                $(".loading").css("display", "none");
                 response.fadeIn(500);
-                response.html('<i class="fa fa-warning"></i> Por favor todos os campos são obrigatórios.');
+                response.html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-warning"></i> Por favor todos os campos são obrigatórios.</div>');
             } else {
                 $.ajax({
                     type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
-                    url: 'assets/php/contact.php', // the url where we want to POST
+                    url: formURL, // the url where we want to POST
                     data: formData, // our data object
+                    dataType: "html",
                     success: function (msg) {
+
+                        $(".loading").css("display", "none");
+
                         var msg = msg.split("|");
                         if (msg[0] === "OK") {
-                            response.html(msg[1]).fadeIn(500);
+                            response.html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Mensagem enviada com sucesso, valeu por particiar!</div>').fadeIn(500);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+        
+        /* ---------------------------------------------- /*
+         * Contact-Error form ajax
+         /* ---------------------------------------------- */
+
+        $('#error-form').submit(function (e) {
+
+            $(".loading").css("display", "block");
+
+            e.preventDefault();
+
+            var c_name = $("#inputnome").val();
+            var c_email = $("#inputemail").val();
+            var c_message = $("#inputmsg").val();
+            var response = $("#error-form .ajax-response");
+
+            var formURL = $("#error-form").attr('action');
+
+            var formData = {
+                'name': c_name,
+                'email': c_email,
+                'message': c_message
+            };
+
+            if ((c_name == '' || c_email == '' || c_message == '') || (!isValidEmailAddress(c_email))) {
+                $(".loading").css("display", "none");
+                response.fadeIn(500);
+                response.html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-warning"></i> Por favor todos os campos são obrigatórios.</div>');
+            } else {
+                $.ajax({
+                    type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                    url: formURL, // the url where we want to POST
+                    data: formData, // our data object
+                    dataType: "html",
+                    success: function (msg) {
+
+                        $(".loading").css("display", "none");
+
+                        var msg = msg.split("|");
+                        if (msg[0] === "OK") {
+                            response.html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> Mensagem enviada com sucesso, valeu por particiar!</div>').fadeIn(500);
                         }
                     }
                 });

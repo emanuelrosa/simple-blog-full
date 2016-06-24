@@ -13,6 +13,54 @@
 
     <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: red">
+                <i class="fa fa-warning fa-fw"></i> 
+                <?php
+                $cont = 0;
+                $mdao = new MensagemDao();
+                $cont = $mdao->getNewCountMensagemError();
+
+                if ($cont > 0) {
+                    echo '<span class="label label-danger">' . $cont . '</span>';
+                }
+                ?>
+
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-messages">
+                <?php
+                if ($cont > 0) {
+                    $mdao = new MensagemDao();
+                    foreach ($mdao->listMensagemSiteError() as $row) {
+                        ?>
+                        <li>
+                            <a href="?errormessage">
+                                <div>
+                                    <strong><?= $row['nome'] ?></strong>
+                                    <span class="pull-right text-muted">
+                                        <em><?= date('d/m/Y', strtotime($row['datahora'])) ?></em>
+                                    </span>
+                                </div>
+                                <div><?= $row['mensagem']; ?></div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <?php
+                    }
+                }
+                ?>
+                <li>
+                    <a class="text-center" href="?errormessage">
+                        <strong>Ver todas as mensagens</strong>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.dropdown-messages -->
+        </li>
+        <!-- /.dropdown -->
+        
+        <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-envelope fa-fw"></i> 
                 <?php
@@ -31,12 +79,11 @@
                 <?php
                 if ($cont > 0) {
                     $mdao = new MensagemDao();
-                    foreach ($mdao->listMensagemSiteNovas() as $row) {
+                    foreach ($mdao->listMensagemSiteSite() as $row) {
                         ?>
                         <li>
                             <a href="#">
                                 <div>
-                                    <strong><?= $row['nome'] ?></strong>
                                     <span class="pull-right text-muted">
                                         <em><?= date('d/m/Y', strtotime($row['datahora'])) ?></em>
                                     </span>

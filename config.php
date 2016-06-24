@@ -18,4 +18,11 @@ function __autoload($nomeClasse) {
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $actual_site = "http://$_SERVER[HTTP_HOST]/blogmodelo.com.br/";
 
+
+
+//carrega configuracoes gerais
+$config = new Config();
+$cdao = new ConfigDao();
+
+$config = $cdao->getConfig();
 ?>

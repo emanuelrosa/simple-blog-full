@@ -28,15 +28,15 @@
                                         //categorias com subcategorias
                                         ?>
                                         <li class="dropdown">
-                                            <a id="drop" href="<?= $row['slug'] ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <a id="drop" href="<?= $actual_site . $row['slug'] ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                 <?= $row['nome'] ?> <span class="caret"></span> 
                                             </a> 
                                             <ul class="dropdown-menu" aria-labelledby="drop2"> 
-                                                <li><a href="<?= $row['slug'] ?>" title="<?= $row['nome'] ?>" ><?= $row['nome'] ?></a></li>
+                                                <li><a href="<?= $actual_site . $row['slug'] ?>" title="<?= $row['nome'] ?>" ><?= $row['nome'] ?></a></li>
                                                 <?php
                                                 foreach ($rs as $row1) {
                                                     ?>
-                                                    <li><a href="<?= $row1['slug'] ?>" title="<?= $row1['nome'] ?>" ><?= $row1['nome'] ?></a></li>
+                                                    <li><a href="<?= $actual_site . $row1['slug'] ?>" title="<?= $row1['nome'] ?>" ><?= $row1['nome'] ?></a></li>
                                                     <?php
                                                 }
                                                 ?>
@@ -47,7 +47,7 @@
                                         //categorias sem subcategorias
                                         ?>
                                         <li class="dropdown">
-                                            <a id="drop" href="<?= $row['slug'] ?>" role="button" aria-haspopup="true" aria-expanded="false" title="<?= $row['nome'] ?>" >
+                                            <a id="drop" href="<?= $actual_site . $row['slug'] ?>" role="button" aria-haspopup="true" aria-expanded="false" title="<?= $row['nome'] ?>" >
                                                 <?= $row['nome'] ?>
                                             </a>
                                         </li> 
@@ -55,6 +55,11 @@
                                     }
                                 }
                                 ?>
+                                <li>
+                                    <a id="drop" href="<?= $actual_site; ?>contact" role="button" aria-haspopup="true" aria-expanded="false" title="Contato" >
+                                        Contato
+                                    </a>
+                                </li>    
                             </ul>
                         </div> 
                     </div> 

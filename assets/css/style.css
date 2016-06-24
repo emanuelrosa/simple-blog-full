@@ -173,14 +173,16 @@ textarea.form-control {
     min-width: 100%;
 }
 
+.loading { display: none; }
+
 /* ---------------------------------------------- /*
  * General Styles
 /* ---------------------------------------------- */
 
 .menu {
-    /*height: 50px;*/
+/*    height: 50px;
     border-top: 1px solid #aeb2d7;
-    border-bottom: 1px solid #aeb2d7;
+    border-bottom: 1px solid #aeb2d7;*/
 }
 
 .search {
@@ -223,7 +225,7 @@ textarea.form-control {
 
 .resume {color: #000; font-size: 1.5em; font-style: italic;}
 
-.top-week .post { color: #000; border-bottom: 1px #ccc solid; margin-bottom: 10px; }
+.top-week .post { color: #000; margin-bottom: 10px; }
 .top-week .post .img { height: 100px; }
 .top-week .post .res { background-color: #fff; position: relative; }
 

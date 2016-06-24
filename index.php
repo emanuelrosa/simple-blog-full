@@ -1,12 +1,5 @@
 <?php
 include_once './config.php';
-
-
-//carrega configuracoes gerais
-$config = new Config();
-$cdao = new ConfigDao();
-
-$config = $cdao->getConfig();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +75,8 @@ $config = $cdao->getConfig();
 
         <!-- Blog start -->
         <?php
-        if (!is_null($config->getImgtopo()) || $config->getImgtopo() !== "") {
+        
+        if ($config->getImgtopo() !== null) {
             ?>
             <!-- Image Top -->
             <div id="home" class="row">
@@ -121,6 +115,9 @@ $config = $cdao->getConfig();
                                 case in_array($_GET['post'], $lcat):
                                     include_once './listapostcat.php';
                                     break;
+                                case "contact":
+                                    include_once './contato.php';
+                                    break;
                                 case "about":
                                     include_once './sobre.php';
                                     break;
@@ -147,7 +144,38 @@ $config = $cdao->getConfig();
                 <div class="col-md-4">
 
                     <!-- Social Links -->
+                    <div>
+                        <div class="social-share">
 
+                            <?php
+                            $s = new Social();
+                            $sdao = new SocialDao();
+
+                            $s = $sdao->getSocial();
+
+                            if ($s->getFacebook() !== "") {
+                                echo "<a href='" . $s->getFacebook() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-facebook'><i class='fa fa-facebook-square fa-3x'></i></a> ";
+                            }
+
+                            if ($s->getWhatsapp() !== "") {
+                                echo "<a href=\"whatsapp://send?text='" . $s->getWhatsapp() . "'\" class='azm-social azm-size-48 azm-r-square azm-whatsapp'><i class='fa fa-whatsapp fa-3x'></i></a>";
+                            }
+                            if ($s->getTwitter() !== "") {
+                                echo "<a href='" . $s->getTwitter() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-twitter'><i class='fa fa-twitter-square fa-3x'></i></a>";
+                            }
+                            if ($s->getGoogle() !== "") {
+                                echo "<a href='" . $s->getGoogle() . "' title='Google Plus' target='_blank' class='azm-social azm-size-48 azm-r-square azm-google-plus'><i class='fa fa-google-plus-square fa-3x'></i></a>";
+                            }
+                            if ($s->getPinterest() !== "") {
+                                echo "<a href='" . $s->getPinterest() . "' title='Pin it' target='_blank' class='azm-social azm-size-48 azm-r-square azm-pinterest'><i class='fa fa-pinterest-square fa-3x'></i></a>";
+                            }
+                            if ($s->getYoutube() !== "") {
+                                echo "<a href='" . $s->getPinterest() . "' title='Canal Youtube' target='_blank' class='azm-social azm-size-48 azm-r-square azm-pinterest'><i class='fa fa-youtube-square fa-3x'></i></a>";
+                            }
+                            ?>
+
+                        </div>
+                    </div>
 
                     <!-- Blog Search Well -->
                     <div class="search">
@@ -195,9 +223,7 @@ $config = $cdao->getConfig();
                         foreach ($pdao->listTopViews() as $row) {
                             ?>
                             <div class="post">
-                                <div class="img">
-                                    <a href="./<?= $row['link'] ?>" title="<?= $row['titulo'] ?>" ><img class="img-responsive" src="assets/images/ban_posts/<?= $row['imagem'] ?>" alt="<?= $row['titulo'] ?>"></a>
-                                </div>
+                                <div class="img" style="background-image: url('assets/images/ban_posts/<?= $row['imagem'] ?>'); background-size: 100%"></div>
                                 <div class="res"><a href="./<?= $row['link'] ?>" title="<?= $row['titulo'] ?>" ><?= $row['resumo'] ?></a></div>
                             </div>
                             <?php
@@ -215,16 +241,69 @@ $config = $cdao->getConfig();
 
             <!-- Footer -->
             <footer>
+                <!-- Error site modal -->
+                <div class="modal fade" id="errorSiteModal" tabindex="-1" role="dialog" aria-labelledby="errorSiteModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form id="error-form" action="assets/php/error.php" >
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Erro no site?</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="loading alert alert-info">
+                                                <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                                                <span class="sr-only">Loading...</span> Estamos enviando sua mensagem...
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ajax-response"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputnome">Nome</label>
+                                                <input type="text" class="form-control" id="inputnome" name="inputnome">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputemail">Email</label>
+                                                <input type="email" class="form-control" id="inputemail" name="inputemail">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="inputmsg">Mensagem</label>
+                                            <textarea class="form-control" id="inputmsg" name="inputmsg" rows="5" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col-lg-7">
                         <a href="./about" title="" >Sobre o site</a> | 
                         <a href="./terms" title="" >Termos de uso</a> | 
-                        <a href="./privacy" title="" >Politica de privacidade</a>
+                        <a href="./privacy" title="" >Politica de privacidade</a> |
+                        <a href="#" title="Mensagem de error" data-toggle="modal" data-target="#errorSiteModal" >Encontrou algum erro?</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-7">
-                        <p>Copyright &copy; Your Website 2016 - Todos os direitos reservados.</p>
+                        <p>Copyright &copy; <?= $actual_site ?> 2016 - Todos os direitos reservados.</p>
                     </div>
                     <div class="col-lg-5" align='right'>
                         <p>Por <a href="http://www.mfagencia.com.br" title="">MF Agência</a></p>

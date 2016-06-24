@@ -9,8 +9,9 @@ Released under the <a href='https://mit-license.org/'>MIT License</a>.
 Modelo de blog simples com área administrativa para gerenciamento das postagens
 feito em Php + Mysql, com PDO.
 
+<pre>
 Informações gerais: 
-<p>
+
     Area adminstrativa:
         - Cadastro de categorias
         - Cadastro de autores 
@@ -48,13 +49,22 @@ Informações gerais:
             - Mensagens do site
 
     Blog:
-        - Layout simples com imagem no topo, menu de categorias, coluna direita com as postagens
-mostrando imagens e resumo, coluna esquerda contendo área de pesquisa,últimas postagens, melhores
-da semana.
-</p>
+        - Layout simples com imagem no topo
+        - Menu de categorias
+        - Coluna direita com as postagens mostrando imagens e resumo
+        - Coluna esquerda contendo área de pesquisa
+        - Últimas postagens, melhores da semana.
+</pre>
 
 
 ATUALIZAÇÕES:
+
+1.1.2
+Atualização em blog
+- Adicionado links de redes sociais ao blog
+- Adicionado pagina de contatos ao blog (envia por email e gera uma msg na area administrativa)
+- Adicionado pagina de erro encontrado no site via modal (envia por email e gera uma msg na area administrativa)
+- ajustes de layouts no blog
 
 1.1.1
 Atualização em blog

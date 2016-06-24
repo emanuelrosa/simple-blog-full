@@ -17,7 +17,7 @@ $datahora = date("Y-m-d H:i:s");
 $nome = $_POST["name"];
 $email = $_POST["email"];
 $mensagem = "Mensagem enviada pelo site: " . $_POST["message"];
-$tipo = "S"; //S - msg site , E - error
+$tipo = "E"; //S - msg site , E - error
 $estado = "0"; // 0 - não conferido , 1 - conferido
 $visto = "0"; // 0 - não visto
 
