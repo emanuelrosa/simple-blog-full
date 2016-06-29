@@ -61,7 +61,7 @@
         <?php
         if (!($p->getImagem() === "")) {
             ?>
-            <img class="img-responsive" src="<?= $actual_site; ?>assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
+            <img class="img-responsive" src="assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
 
             <hr>
             <?php
@@ -77,13 +77,13 @@
         <div class='row'>
             <div class='col-md-3' align='center'>
                 <?php
-                if($a->getImagem() === ""){
-                    ?><img src="<?= $actual_site; ?>assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
+                if ($a->getImagem() === "") {
+                    ?><img src="assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
                 } else {
-                    ?><img src="<?= $actual_site; ?>assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
+                    ?><img src="assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
                 }
                 ?>
-                
+
             </div>
             <div class='col-md-9'>
                 <p><?= $a->getNome() ?></p>
@@ -91,7 +91,7 @@
             </div>
         </div>
         <hr>
-        
+
         <!-- Social Buttons -->
         <div class="row social-share">
             <div class="col-md-6">
@@ -132,7 +132,7 @@
         //mostra comentário
         ?>
         <!-- Comments -->
-        <div class="fb-comments" data-href="<?= $actual_link ?>" data-width="100%" data-numposts="10"></div>
+        <h3>Comentarios desativados para pré-visualização de noticias.</h3>
 
         <hr>
 

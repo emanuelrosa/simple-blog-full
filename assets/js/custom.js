@@ -138,7 +138,7 @@
             }
             return false;
         });
-        
+
         /* ---------------------------------------------- /*
          * Contact-Error form ajax
          /* ---------------------------------------------- */
@@ -185,6 +185,25 @@
             }
             return false;
         });
+
+        /* ---------------------------------------------- /*
+         * Salvar horario de saida
+         /* ---------------------------------------------- */
+
+        window.onbeforeunload = function () {
+
+            //remove visita online
+            $.ajax({
+                type: 'POST',
+                url: './visitante_online.php', 
+                data: 'sair', 
+                dataType: "html",
+                success: function (msg) {
+                    
+                }
+            });
+
+        }
 
     });
 

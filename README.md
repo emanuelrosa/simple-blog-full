@@ -47,6 +47,7 @@ Informações gerais:
             - politica de privacidade
             - Mensagens de erros (recebidas pelo blog)
             - Mensagens do site
+            - Contador de visitas
 
     Blog:
         - Layout simples com imagem no topo
@@ -58,6 +59,14 @@ Informações gerais:
 
 
 ATUALIZAÇÕES:
+
+1.1.3
+Atualização em área administrativa
+- Contador de visitas no blog
+- Adicionado preview de matérias ao editar materia
+
+Atualização em blog
+- Contador de visitas
 
 1.1.2
 Atualização em blog

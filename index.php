@@ -43,6 +43,7 @@ include_once './config.php';
 
     </head>
     <body>
+        <div id="home"></div>
         <?= $config->getBody(); ?>
 
         <!-- Facebook Comments appId -->
@@ -79,9 +80,9 @@ include_once './config.php';
         if ($config->getImgtopo() !== null) {
             ?>
             <!-- Image Top -->
-            <div id="home" class="row">
+            <div class="row">
                 <div class="col-lg-12">
-                    <img src="assets/images/config_img/<?= $config->getImgtopo(); ?>" title="" width="100%">
+                    <img src="<?= $actual_site; ?>assets/images/config_img/<?= $config->getImgtopo(); ?>" title="" width="100%">
                 </div>
             </div>
             <?php
@@ -112,6 +113,9 @@ include_once './config.php';
                             }
 
                             switch ($_GET['post']) {
+                                case "preview":
+                                    include_once './listapostcat.php';
+                                    break;
                                 case in_array($_GET['post'], $lcat):
                                     include_once './listapostcat.php';
                                     break;
@@ -223,7 +227,7 @@ include_once './config.php';
                         foreach ($pdao->listTopViews() as $row) {
                             ?>
                             <div class="post">
-                                <div class="img" style="background-image: url('assets/images/ban_posts/<?= $row['imagem'] ?>'); background-size: 100%"></div>
+                                <div class="img" style="background-image: url('<?= $actual_site; ?>assets/images/ban_posts/<?= $row['imagem'] ?>'); background-size: 100%"></div>
                                 <div class="res"><a href="./<?= $row['link'] ?>" title="<?= $row['titulo'] ?>" ><?= $row['resumo'] ?></a></div>
                             </div>
                             <?php
