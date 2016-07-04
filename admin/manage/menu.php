@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html"><img src="../../assets/images/logo/logotopadmin.png" title="mf agencia"></a>
+        <a class="navbar-brand" href="index.html"><img src="../../assets/images/config_img/<?= ($config->getImglogoadmin() == "") ? "default_adm.png" : $config->getImglogoadmin(); ?>" title="<?= $config->getTitulo(); ?>"></a>
     </div>
     <!-- /.navbar-header -->
 
@@ -59,7 +59,7 @@
             <!-- /.dropdown-messages -->
         </li>
         <!-- /.dropdown -->
-        
+
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-envelope fa-fw"></i> 
@@ -106,7 +106,7 @@
             <!-- /.dropdown-messages -->
         </li>
         <!-- /.dropdown -->
-        
+
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -168,24 +168,24 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-<!--                <li>
-                    <a href="#"><i class="fa fa-bullhorn fa-server"></i> Email Marketing<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="?campanhas">Campanhas</a>
-                        </li>
-                        <li>
-                            <a href="?leads">Leads</a>
-                        </li>
-                        <li>
-                            <a href="?treinamentos">Treinamentos</a>
-                        </li>
-                        <li>
-                            <a href="?produtos">Produtos</a>
-                        </li>
-                    </ul>
-                     /.nav-second-level 
-                </li>-->
+                <!--                <li>
+                                    <a href="#"><i class="fa fa-bullhorn fa-server"></i> Email Marketing<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="?campanhas">Campanhas</a>
+                                        </li>
+                                        <li>
+                                            <a href="?leads">Leads</a>
+                                        </li>
+                                        <li>
+                                            <a href="?treinamentos">Treinamentos</a>
+                                        </li>
+                                        <li>
+                                            <a href="?produtos">Produtos</a>
+                                        </li>
+                                    </ul>
+                                     /.nav-second-level 
+                                </li>-->
 
             </ul>
         </div>

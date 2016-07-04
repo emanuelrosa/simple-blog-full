@@ -23,3 +23,9 @@ function __autoload($nomeClasse) {
         include_once "../../dao/" . $nomeClasse . ".class.php";
     }
 }
+
+//carrega configuracoes gerais
+$config = new Config();
+$cdao = new ConfigDao();
+
+$config = $cdao->getConfig();

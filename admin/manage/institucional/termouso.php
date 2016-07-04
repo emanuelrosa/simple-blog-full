@@ -57,7 +57,7 @@ $inst = $instdao->getInstitucional('termosuso');
                                         <div class="panel-heading" role="tab" id="headingOne">
                                             <h4 class="panel-title">
                                                 <a role="button" data-toggle="collapse" data-parent="#accordionEstado" href="#collapseEstadoOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Liberar postagem
+                                                    Liberar texto
                                                 </a>
                                             </h4>
                                         </div>
@@ -65,7 +65,7 @@ $inst = $instdao->getInstitucional('termosuso');
                                             <div class="panel-body">
 
                                                 <div class="form-group">
-                                                    Liberar postagem assim que publicada?
+                                                    Liberar texto assim que publicada?
                                                     <div class="radio">
                                                         <label>
                                                             <input type="radio" name="inputestado" id="inputestado" value="1" <?= ($inst->getEstado() === '1') ? "checked" : ""; ?>> Sim

@@ -64,9 +64,10 @@ class VisitaDao {
 
     function inserePageview(Visita $v) {
         try {
-            $stmt = $this->p->prepare("UPDATE `visita` SET `cont` = `cont` + 1 WHERE `ip` = ? AND `url` = ?");
+            $stmt = $this->p->prepare("UPDATE `visita` SET `cont` = `cont` + 1 WHERE `ip` = ? AND `url` = ? AND `data` = ?");
             $stmt->bindValue(1, $v->getIp());
             $stmt->bindValue(2, $v->getUrl());
+            $stmt->bindValue(3, $v->getData());
 
             $rs = $stmt->execute();
 
@@ -80,7 +81,7 @@ class VisitaDao {
 
     public function listUltamasVisitasSemana() {
         try {
-            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE()-7 AND CURRENT_DATE() group by data");
+            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() group by data");
             return $stmt;
         } catch (PDOException $exc) {
             echo $exc->getMessage();
@@ -89,7 +90,7 @@ class VisitaDao {
 
     public function listPostsMaisVisitadosSemana() {
         try {
-            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE()-7 AND CURRENT_DATE() group by url ORDER BY cont DESC");
+            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() group by url ORDER BY cont DESC");
             return $stmt;
         } catch (PDOException $exc) {
             echo $exc->getMessage();

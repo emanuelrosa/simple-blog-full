@@ -23,7 +23,10 @@ $social = $socialdao->getSocial();
 
                     <div id="d-conteudo">
                         <div class='row'>
-                            <div class='col-md-4 col-md-offset-8' align='right'>
+                            <div class="col-md-8">
+                                Digite aqui o link para as redes sociais do blog.
+                            </div>
+                            <div class='col-md-4' align='right'>
                                 <button type="submit" class="btn btn-primary">Publicar</button>
                             </div>
                         </div>
@@ -53,7 +56,7 @@ $social = $socialdao->getSocial();
                                     <input type="text" class="form-control" id="inputpinterest" name="inputpinterest" placeholder="Pinterest" value="<?= $social->getPinterest() ?>">
                                 </div>
                             </div>
-                            <div class='col-md-4'><img src="../../assets/images/socialmedia1.jpg" alt="" width="100%"/></div>
+                            <div class='col-md-4'><img src="../../../assets/images/socialmedia1.jpg" alt="" width="100%"/></div>
                         </div>
                         <hr>
                         <div class='row'>

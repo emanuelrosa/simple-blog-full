@@ -56,7 +56,7 @@
                                 }
                                 ?>
                                 <li>
-                                    <a id="drop" href="<?= $actual_site; ?>contact" role="button" aria-haspopup="true" aria-expanded="false" title="Contato" >
+                                    <a id="drop" href="<?= $actual_site; ?>/contact" role="button" aria-haspopup="true" aria-expanded="false" title="Contato" >
                                         Contato
                                     </a>
                                 </li>    

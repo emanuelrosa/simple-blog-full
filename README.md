@@ -60,6 +60,23 @@ Informações gerais:
 
 ATUALIZAÇÕES:
 
+1.1.4
+Atualização para inicialiação de projeto.
+- feito vários ajustes para quando o projeto se inicia do zero.
+
+Atualização em área administrativa
+- Ajustado sql de contador de visita
+- Ajustado lista de categorias para blog, quando não há nenhuma categorias.
+
+Atualização em blog
+- Removido msg erro interno que estava visível site. 
+- Ajustado links estáticos do blog.
+- Ajustado váriod links internos.
+
+Banco de dados
+- Criado arquivo de backup inicial para blog.
+- Adicionado arquivo de banco de dados.
+
 1.1.3
 Atualização em área administrativa
 - Contador de visitas no blog

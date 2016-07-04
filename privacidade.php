@@ -1,10 +1,10 @@
 <?php
+$i = new Institucional();
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+$idao = new InstitucionalDao();
+$i = $idao->getInstitucional("privacidade");
 
+if($i->getEstado() > 0) {
+    echo $i->getTexto();
+}
 ?>
-privacidade

@@ -123,7 +123,7 @@ class CategoriaDao {
         try {
             $stmt = $this->p->query("select *, 
                 (select count(idpost) from post P 
-                left join post_has_categoria PC on p.idpost = PC.post_idpost 
+                left join post_has_categoria PC on P.idpost = PC.post_idpost 
                 where PC.categoria_idcategoria = C.idcategoria) as contpost 
                 from categoria C;");
 

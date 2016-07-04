@@ -135,7 +135,6 @@
         <h3>Comentarios desativados para pré-visualização de noticias.</h3>
 
         <hr>
-
         <?php
     } else {
         //nao mostra comentários

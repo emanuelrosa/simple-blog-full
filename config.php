@@ -1,5 +1,8 @@
 <?php
 
+// Turn off all error reporting
+//error_reporting(0);
+
 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -15,7 +18,7 @@ function __autoload($nomeClasse) {
 
 //URL página atual
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$actual_site = "http://$_SERVER[HTTP_HOST]/blogmodelo.com.br/";
+$actual_site = "http://$_SERVER[HTTP_HOST]";
 
 //carrega configuracoes gerais
 $config = new Config();
@@ -24,8 +27,8 @@ $cdao = new ConfigDao();
 $config = $cdao->getConfig();
 
 //adiciona contador se nao for preview
-if (isset($_GET['post']) && $_GET['post'] == "preview") {
-    //adiciona contador de visita
+if (!isset($_GET['post']) || isset($_GET['post']) && $_GET['post'] != "preview") {
+    //não adiciona contador de visita
     include "./cont_visita.php";
 }
 ?>
