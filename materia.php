@@ -1,12 +1,8 @@
 <div class="row">
 
     <?php
-    $link = $_GET['post'];
-
-    //pega postagem no banco de dados
-    $pdao = new PostDao();
-    $p = new Post();
-    $p = $pdao->getPostByLink($link);
+    //dados da postagem carregada em config.php pois necessita ser lido 
+    //antes das metatags para configurações de compartilhamento
 
     //adiciona visualização a postagem
     $pdao = new PostDao();
@@ -61,7 +57,7 @@
         <?php
         if (!($p->getImagem() === "")) {
             ?>
-            <img class="img-responsive" src="<?= $actual_site; ?>assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
+            <img class="img-responsive" src="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
 
             <hr>
             <?php
@@ -73,29 +69,43 @@
 
         <hr>
 
+        <!-- ADS 4 -->
+        <div class="ads">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- 728x15-CCG-Links Horizontal -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:15px"
+                 data-ad-client="ca-pub-6170961506359362"
+                 data-ad-slot="6301605949"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <!-- ./ADS 4 -->
+        
+        
         <!-- Author -->
         <div class='row'>
             <div class='col-md-3' align='center'>
                 <?php
-                if($a->getImagem() === ""){
-                    ?><img src="<?= $actual_site; ?>assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
+                if ($a->getImagem() === "") {
+                    ?><img src="<?= $actual_site; ?>/assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
                 } else {
-                    ?><img src="<?= $actual_site; ?>assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
+                    ?><img src="<?= $actual_site; ?>/assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
                 }
                 ?>
-                
+
             </div>
             <div class='col-md-9'>
-                <p><?= $a->getNome() ?></p>
-                <p><?= $a->getPerfil() ?></p>
+                <p><b><?= $a->getNome() ?></b></p>
+                <p><i><?= $a->getPerfil() ?></i></p>
             </div>
         </div>
         <hr>
-        
+
         <!-- Social Buttons -->
         <div class="row social-share">
             <div class="col-md-6">
-
                 <a href="#" class="azm-social azm-size-48 azm-r-square azm-facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?= $actual_link ?>', 'facebook-share-dialog', 'width=626,height=436');
                         return false;"><i class="fa fa-facebook-square fa-2x"></i></a> 
                 <a href="whatsapp://send?text='<?= $actual_link ?>'" class="azm-social azm-size-48 azm-r-square azm-whatsapp"><i class="fa fa-whatsapp fa-2x"></i></a>

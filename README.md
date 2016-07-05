@@ -60,6 +60,10 @@ Informações gerais:
 
 ATUALIZAÇÕES:
 
+1.1.5
+Atualização em blog
+- adicionado meta tags especificas de compartilhamento para redes sociais facebook, google, twitter
+
 1.1.4
 Atualização para inicialiação de projeto.
 - feito vários ajustes para quando o projeto se inicia do zero.

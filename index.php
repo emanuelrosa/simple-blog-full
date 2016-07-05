@@ -14,11 +14,49 @@ include_once './config.php';
 
         <title><?= $config->getTitulo(); ?></title>
 
-        <!-- meta fecebook -->
-        <meta property="og:image" content="<?= $actual_site; ?>/assets/images/config_img/<?= $config->getImgsocial(); ?>" />
-        <meta property="og:image:type" content="image/jpeg">
+        <?php
+        if (isset($_GET['post']) && $_GET['post'] != "preview") {
+            
+            //se rede social google+ estiver preenchido configura compartilhamento
+            if ($s->getGoogle() !== "") {
+                ?>
+                <!-- Código para Google Authorship e Publisher -->
+                <link rel="author" href="<?= $s->getGoogle() ?>/posts"/>
+                <link rel="publisher" href="<?= $s->getGoogle() ?>"/>
 
-        <!--<meta property="fb:admins" content="{YOUR_FACEBOOK_USER_ID_1}"/>-->
+                <!-- Código do Schema.org também para o Google+ -->
+                <meta itemprop="name" content="<?= $p->getTitulo() ?>">
+                <meta itemprop="description" content="<?= $p->getResumo() ?>">
+                <meta itemprop="image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>">
+                <?php
+            }
+            ?>
+
+            <!-- para o Twitter Card-->
+            <meta name="twitter:card" value="summary">
+            <meta name="twitter:site" content="@bjjblitz">
+            <meta name="twitter:title" content="<?= $p->getTitulo() ?>">
+            <meta name="twitter:description" content="<?= $p->getResumo() ?>">
+            <meta name="twitter:creator" content="@bjjblitz">
+            <!-- imagens para o Twitter Summary Card precisam ter pelo menos 200×200 px -->
+            <meta name="twitter:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>">
+
+            <!-- meta fecebook -->
+            <meta property="fb:app_id" content="<?= $config->getAppid_facebook() ?>" />
+            <meta property="og:locale" content="en_US">
+            <meta property="og:url" content="<?= $actual_link ?>">
+            <meta property="og:title" content="<?= $p->getTitulo() ?>">
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="<?= $config->getTitulo() ?>">
+            <meta property="og:description" content="<?= $p->getResumo() ?>">
+            <meta property="og:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>" />
+            <meta property="og:image:type" content="image/jpeg">
+            <meta property="article:tag" content="<?= $p->getTags() ?>" />
+
+            <meta property="fb:admins" content="10153085749657115"/>
+            <?php
+        }
+        ?>
 
         <!-- fav and touch icons -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= $actual_site; ?>/assets/images/ico/apple-icon-57x57.png">
@@ -111,7 +149,23 @@ include_once './config.php';
 
                 <!-- Blog Post Content Column -->
                 <div class="col-lg-8">
+
                     <div id="contentcolumn">
+                        <!-- ADS 1 -->
+                        <div class="ads">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- 728x90-CCG-Final Post -->
+                            <ins class="adsbygoogle"
+                                 style="display:inline-block;width:728px;height:90px"
+                                 data-ad-client="ca-pub-6170961506359362"
+                                 data-ad-slot="6022404340"></ins>
+                            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                        <!-- ./ADS 1 -->
+
+
                         <?php
                         if (isset($_GET["search"])) {
                             include_once './pesquisa.php';
@@ -119,6 +173,7 @@ include_once './config.php';
                             //lista todas as categorias
                             $cdao = new CategoriaDao();
                             $rs = $cdao->listAllActivesCategorias();
+                            $lcat[] = null;
                             foreach ($rs as $row) {
                                 $lcat[] = $row['slug'];
                             }
@@ -152,21 +207,19 @@ include_once './config.php';
                             include_once './home.php';
                         }
                         ?>
+
+
                     </div>
                 </div>
 
                 <!-- Blog Sidebar Widgets Column -->
                 <div class="col-md-4">
-
                     <!-- Social Links -->
                     <div>
                         <div class="social-share">
 
                             <?php
-                            $s = new Social();
-                            $sdao = new SocialDao();
-
-                            $s = $sdao->getSocial();
+                            //dados de redes sociais lidos em config.php
 
                             if ($s->getFacebook() !== "") {
                                 echo "<a href='" . $s->getFacebook() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-facebook'><i class='fa fa-facebook-square fa-3x'></i></a> ";
@@ -206,6 +259,20 @@ include_once './config.php';
                         <!-- /.input-group -->
                     </div>
 
+                    <!-- ADS 2-->
+                    <div class="ads">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- ret_grande_336x280 -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:336px;height:280px"
+                             data-ad-client="ca-pub-6170961506359362"
+                             data-ad-slot="9456294340"></ins>
+                        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                    <!-- ./ ADS 2-->
+
                     <!-- Last posts -->
                     <div class="lastpost">
                         <h4>Últimas Postagens</h4>
@@ -221,10 +288,7 @@ include_once './config.php';
                         <!-- /.input-group -->
                     </div>
 
-                    <!-- Adsense -->
-
-
-                    <!-- Facebook timeline UTGAMES -->
+                    <!-- Facebook timeline -->
                     <div align='center'>
                         <?php
                         if ($s->getFacebook() !== "") {
@@ -251,6 +315,19 @@ include_once './config.php';
 
                     </div>
 
+                    <!-- ADS 4-->
+                    <div class="ads">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- 300x600_lateral -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:300px;height:600px"
+                             data-ad-client="ca-pub-6170961506359362"
+                             data-ad-slot="5030922341"></ins>
+                        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                    <!-- ./ ADS 4-->
                 </div>
 
             </div>

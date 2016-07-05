@@ -27,8 +27,24 @@ $cdao = new ConfigDao();
 $config = $cdao->getConfig();
 
 //adiciona contador se nao for preview
-if (!isset($_GET['post']) || isset($_GET['post']) && $_GET['post'] != "preview") {
+if (!isset($_GET['post']) || (isset($_GET['post']) && $_GET['post'] != "preview")) {
     //não adiciona contador de visita
     include "./cont_visita.php";
 }
+
+//ler dados metatag pra compartilhamento facebook
+if (isset($_GET['post']) && $_GET['post'] != "preview") {
+    $link = $_GET['post'];
+
+    //pega postagem no banco de dados
+    $pdao = new PostDao();
+    $p = new Post();
+    $p = $pdao->getPostByLink($link);
+}
+
+//carrega dados redes sociais
+$s = new Social();
+$sdao = new SocialDao();
+
+$s = $sdao->getSocial();
 ?>
