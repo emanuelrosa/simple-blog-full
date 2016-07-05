@@ -34,10 +34,10 @@ include_once './config.php';
 
             <!-- para o Twitter Card-->
             <meta name="twitter:card" value="summary">
-            <meta name="twitter:site" content="@bjjblitz">
+            <meta name="twitter:site" content="">
             <meta name="twitter:title" content="<?= $p->getTitulo() ?>">
             <meta name="twitter:description" content="<?= $p->getResumo() ?>">
-            <meta name="twitter:creator" content="@bjjblitz">
+            <meta name="twitter:creator" content="">
             <!-- imagens para o Twitter Summary Card precisam ter pelo menos 200×200 px -->
             <meta name="twitter:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>">
 
@@ -53,7 +53,7 @@ include_once './config.php';
             <meta property="og:image:type" content="image/jpeg">
             <meta property="article:tag" content="<?= $p->getTags() ?>" />
 
-            <meta property="fb:admins" content="10153085749657115"/>
+            <meta property="fb:admins" content=""/>
             <?php
         }
         ?>
