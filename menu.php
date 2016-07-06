@@ -13,7 +13,7 @@
                                 <span class = "icon-bar"></span>
                                 <span class = "icon-bar"></span>
                             </button>
-                            <a class = "navbar-brand" href = "./">Início</a>
+                            <a class = "navbar-brand" href = "<?= $actual_site ?>">Início</a>
                         </div>
                         <div class = "collapse navbar-collapse bs-example-js-navbar-collapse">
                             <ul class = "nav navbar-nav">

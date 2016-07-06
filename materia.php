@@ -23,9 +23,7 @@
         <h1><?= $p->getTitulo(); ?></h1>
 
         <!-- Author -->
-        <p class="lead">
-            por <a href="#"><?= $p->getNomeautor() ?></a>
-        </p>
+        <p class="autor">por <a href="#"><?= $p->getNomeautor() ?></a></p>
 
         <hr>
 

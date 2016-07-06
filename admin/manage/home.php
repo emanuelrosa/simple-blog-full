@@ -1,3 +1,21 @@
+<!-- Facebook Comments appId -->
+<?php
+if (!is_null($config->getAppid_facebook()) || $config->getAppid_facebook() !== "") {
+    ?>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=<?= $config->getAppid_facebook(); ?>";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>                
+    <?php
+}
+?>
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Seja bem vindo.</h1>
@@ -62,9 +80,9 @@
                                 ?>
                                 <tr>
                                     <td style="width: 5%"></td>
-                                    <td style="width: 60%"><?= $row['url']; ?></td>
+                                    <td style="width: 60%"><a href="<?= $actual_site . $row['url'] ?>" ><?= $row['url']; ?></a></td>
                                     <td style="width: 20%" align="center" ><?= $row['cont']; ?></td>
-                                    <td style="width: 15%" align="center" ><span class="fb-comments-count" data-href="<?= $_SERVER['SERVER_NAME'] . '/' . $row['url']; ?>"></span></td>
+                                    <td style="width: 15%" align="center" ><span class="fb-comments-count" data-href="http://<?= $_SERVER['SERVER_NAME'] . $row['url']; ?>"></span></td>
                                 </tr>
                                 <?php
                             }

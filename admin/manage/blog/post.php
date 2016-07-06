@@ -287,8 +287,13 @@ if (array_key_exists(1, $args)) {
                                 if (isset($post)) {
                                     ?><a href="#" class="btn btn-default btn-voltar">Voltar</a><?php
                                 }
+                                
+                                if ($edit) {
+                                    ?>
+                                    <a href="<?= "http://$_SERVER[HTTP_HOST]/preview/" . $post->getLink() ?>" target="_blank" class="btn btn-default">Visualizar</a>
+                                    <?php
+                                }
                                 ?>
-                                <a href="#" class="btn btn-default">Visualizar</a>
                                 <button type="submit" class="btn btn-primary">Publicar</button>
                             </div>
                         </div>

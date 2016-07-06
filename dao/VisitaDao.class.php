@@ -90,7 +90,10 @@ class VisitaDao {
 
     public function listPostsMaisVisitadosSemana() {
         try {
-            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() group by url ORDER BY cont DESC");
+            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE 
+                `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() AND 
+                ((`url` != '/about') AND (`url` != '/terms') AND (`url` != '/privacy') AND (`url` != '/contact') ) group by url ORDER BY cont DESC LIMIT 0 , 10");
+            
             return $stmt;
         } catch (PDOException $exc) {
             echo $exc->getMessage();

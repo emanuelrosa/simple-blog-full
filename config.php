@@ -1,7 +1,7 @@
 <?php
 
 // Turn off all error reporting
-//error_reporting(0);
+//error_reporting();
 
 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 date_default_timezone_set('America/Sao_Paulo');
@@ -16,7 +16,7 @@ function __autoload($nomeClasse) {
     }
 }
 
-//URL página atual
+//URL do site e url completa atual
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $actual_site = "http://$_SERVER[HTTP_HOST]";
 
@@ -27,13 +27,14 @@ $cdao = new ConfigDao();
 $config = $cdao->getConfig();
 
 //adiciona contador se nao for preview
-if (!isset($_GET['post']) || (isset($_GET['post']) && $_GET['post'] != "preview")) {
+if (!isset($_GET['preview'])) {
     //não adiciona contador de visita
     include "./cont_visita.php";
 }
 
-//ler dados metatag pra compartilhamento facebook
-if (isset($_GET['post']) && $_GET['post'] != "preview") {
+//ler dados metatag pra compartilhamento facebook e postagem
+if (isset($_GET['post'])) {
+    
     $link = $_GET['post'];
 
     //pega postagem no banco de dados

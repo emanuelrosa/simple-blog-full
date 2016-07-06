@@ -1,5 +1,4 @@
 <div class="row">
-
     <?php
     $link = $_GET['post'];
 
@@ -27,7 +26,7 @@
         <h1><?= $p->getTitulo(); ?></h1>
 
         <!-- Author -->
-        <p class="lead">
+        <p class="autor">
             por <a href="#"><?= $p->getNomeautor() ?></a>
         </p>
 
@@ -61,7 +60,7 @@
         <?php
         if (!($p->getImagem() === "")) {
             ?>
-            <img class="img-responsive" src="assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
+            <img class="img-responsive" src="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>" alt="<?= $p->getLink() ?>">
 
             <hr>
             <?php
@@ -78,9 +77,9 @@
             <div class='col-md-3' align='center'>
                 <?php
                 if ($a->getImagem() === "") {
-                    ?><img src="assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
+                    ?><img src="<?= $actual_site; ?>/assets/images/authors/user-default.png" title="<?= $a->getNome() ?>" width="70%"><?php
                 } else {
-                    ?><img src="assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
+                    ?><img src="<?= $actual_site; ?>/assets/images/authors/<?= $a->getImagem() ?>" title="<?= $a->getNome() ?>"><?php
                 }
                 ?>
 
@@ -95,46 +94,38 @@
         <!-- Social Buttons -->
         <div class="row social-share">
             <div class="col-md-6">
-
-                <a href="#" class="azm-social azm-size-48 azm-r-square azm-facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?= $actual_link ?>', 'facebook-share-dialog', 'width=626,height=436');
-                        return false;"><i class="fa fa-facebook-square fa-2x"></i></a> 
-                <a href="whatsapp://send?text='<?= $actual_link ?>'" class="azm-social azm-size-48 azm-r-square azm-whatsapp"><i class="fa fa-whatsapp fa-2x"></i></a>
-                <a href="https://twitter.com/share?url=<?= $actual_link ?>" target="_blank" class="azm-social azm-size-48 azm-r-square azm-twitter"><i class="fa fa-twitter-square fa-2x"></i></a>
-                <a href="https://plus.google.com/share?url=<?= $actual_link ?>" title="Share on Google Plus" target="_blank" class="azm-social azm-size-48 azm-r-square azm-google-plus"><i class="fa fa-google-plus-square fa-2x"></i></a>
-                <a href="http://www.pinterest.com/pin/create/button/?url=<?= $actual_link ?>&description=<?= $p->getResumo() ?>" title="Pin it" target="_blank" class="azm-social azm-size-48 azm-r-square azm-pinterest"><i class="fa fa-pinterest-square fa-2x"></i></a>
-                <a href="https://www.linkedin.com/shareArticle?url=<?= $actual_link ?>" title="Linkedin" target="_blank" class="azm-social azm-size-48 azm-r-square azm-linkedin"><i class="fa fa-linkedin-square fa-2x"></i></a>
-                <a href="http://tumblr.com/widgets/share/tool?canonicalUrl=<?= $actual_link ?>" title="Linkedin" target="_blank" class="azm-social azm-size-48 azm-r-square azm-tumblr"><i class="fa fa-tumblr-square fa-2x"></i></a>
+                <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a> 
+                <a href="#" class="azm-social azm-size-48 azm-r-square azm-whatsapp"><i class="fa fa-whatsapp fa-2x"></i></a>
+                <a href="#" target="_blank" class="azm-social azm-size-48 azm-r-square azm-twitter"><i class="fa fa-twitter-square fa-2x"></i></a>
+                <a href="#" title="Share on Google Plus" target="_blank" class="azm-social azm-size-48 azm-r-square azm-google-plus"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                <a href="#" title="Pin it" target="_blank" class="azm-social azm-size-48 azm-r-square azm-pinterest"><i class="fa fa-pinterest-square fa-2x"></i></a>
+                <a href="#" title="Linkedin" target="_blank" class="azm-social azm-size-48 azm-r-square azm-linkedin"><i class="fa fa-linkedin-square fa-2x"></i></a>
+                <a href="#" title="Linkedin" target="_blank" class="azm-social azm-size-48 azm-r-square azm-tumblr"><i class="fa fa-tumblr-square fa-2x"></i></a>
             </div>
             <div class="col-md-6" align='right'>
-                <?php
-                $pdao = new PostDao();
-                $links = $pdao->getLastPostLink($p->getIdpost());
-                $links = explode("|", $links);
-
-                if ($links[0] !== "") {
-                    ?><a href="./<?= $links[0] ?>" class="btn btn-primary">Matéria anterior</a><?php
-                }
-                if ($links[1] !== "") {
-                    ?>&nbsp;<a href="./<?= $links[1] ?>" class="btn btn-primary">Próxima matéria</a><?php
-                }
-                ?>
+                <a href="#" class="btn btn-primary">Matéria anterior</a>&ensp;
+                <a href="#" class="btn btn-primary">Próxima matéria</a>
             </div>
         </div>
 
     </div>
 
     <hr>
-
     <!-- Blog Comments -->
 
     <?php
     if ($p->getComentario() == '1') {
         //mostra comentário
         ?>
-        <!-- Comments -->
-        <h3>Comentarios desativados para pré-visualização de noticias.</h3>
 
-        <hr>
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <!-- Comments -->
+        <h2>Comentarios desativados para pré-visualização de noticias.</h2>
+
+        <br />
+        <br />
+        <hr />
         <?php
     } else {
         //nao mostra comentários

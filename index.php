@@ -16,7 +16,7 @@ include_once './config.php';
 
         <?php
         if (isset($_GET['post']) && $_GET['post'] != "preview") {
-            
+
             //se rede social google+ estiver preenchido configura compartilhamento
             if ($s->getGoogle() !== "") {
                 ?>
@@ -34,10 +34,10 @@ include_once './config.php';
 
             <!-- para o Twitter Card-->
             <meta name="twitter:card" value="summary">
-            <meta name="twitter:site" content="">
+            <meta name="twitter:site" content="@">
             <meta name="twitter:title" content="<?= $p->getTitulo() ?>">
             <meta name="twitter:description" content="<?= $p->getResumo() ?>">
-            <meta name="twitter:creator" content="">
+            <meta name="twitter:creator" content="@">
             <!-- imagens para o Twitter Summary Card precisam ter pelo menos 200×200 px -->
             <meta name="twitter:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>">
 
@@ -53,7 +53,7 @@ include_once './config.php';
             <meta property="og:image:type" content="image/jpeg">
             <meta property="article:tag" content="<?= $p->getTags() ?>" />
 
-            <meta property="fb:admins" content=""/>
+            <meta property="fb:admins" content="[facebook_id]"/>
             <?php
         }
         ?>
@@ -167,7 +167,9 @@ include_once './config.php';
 
 
                         <?php
-                        if (isset($_GET["search"])) {
+                        if (isset($_GET['preview'])) {
+                            include_once './preview.php';
+                        } else if (isset($_GET["search"])) {
                             include_once './pesquisa.php';
                         } else if (isset($_GET['post'])) {
                             //lista todas as categorias
@@ -179,9 +181,6 @@ include_once './config.php';
                             }
 
                             switch ($_GET['post']) {
-                                case "preview":
-                                    include_once './listapostcat.php';
-                                    break;
                                 case in_array($_GET['post'], $lcat):
                                     include_once './listapostcat.php';
                                     break;
@@ -281,7 +280,7 @@ include_once './config.php';
                             <?php
                             $pdao = new PostDao();
                             foreach ($pdao->listLastFivePostActive() as $row) {
-                                echo '<li><a href="' . $row['link'] . '"><span>' . $row['titulo'] . '</span></a></li>';
+                                echo '<li><a href="' . $actual_site . "/" . $row['link'] . '"><span>' . $row['titulo'] . '</span></a></li>';
                             }
                             ?>
                         </ul>
@@ -307,7 +306,7 @@ include_once './config.php';
                             ?>
                             <div class="post">
                                 <div class="img" style="background-image: url('<?= $actual_site; ?>/assets/images/ban_posts/<?= $row['imagem'] ?>'); background-size: 100%"></div>
-                                <div class="res"><a href="./<?= $row['link'] ?>" title="<?= $row['titulo'] ?>" ><?= $row['resumo'] ?></a></div>
+                                <div class="res"><a href="<?= $actual_site . "/" . $row['link'] ?>" title="<?= $row['titulo'] ?>" ><?= $row['resumo'] ?></a></div>
                             </div>
                             <?php
                         }
