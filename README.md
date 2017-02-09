@@ -60,14 +60,67 @@ Informações gerais:
 
 ATUALIZAÇÕES:
 
+1.1.8
+Atualização em área administrativa
+- Correção na edição de termos de uso, sobre o site e politicas de privacidade, adições automatizadas sem necessidade de adicionar direto no banco.
+- Correção na edição de configurações gerais, configurado para primeira adição sem necessidade de adicionar direto no banco.
+- Adicionado edição de link do site em configurações gerais, e editado todos os links no site.
+- Adicionado edição de ano de criação em configurações gerais, para mostrar em footer de página.
+- correção em links de menu.
+- link url em postagem não é alterado ao editar postagem.
+- corridigo link em imagem de menu
+
+Area do autor
+
+Atualização em blog
+
+
+1.1.7
+Atualização em área administrativa
+- Correção na atualização de imagens das postagens em editar Postagem.
+- Adicionado botão 'Ver Postagem' em listagem de postagem
+- possível Adicionar/Editar/remover 4 Adsenses posicionados estrategicamente na página
+- Adicionado agendamendo de postagens de acordo com a data selecionada.
+- Adicionado arquivos para pixel code do Facebook
+
+Area do autor
+- Corrigido listagem de postagem contador de visitas
+- Corrigido visualizar postagens de autor
+- Adicionado botao de ver post no blog do autor
+- Correção de visualização de comentarios em listagem de postagem
+
+Atualização em blog
+- Adicionado página de erro ao não encontrar postagem
+- Ajustes de layout no site
+- Adicionado Ads estratégicos em todas as paginas...
+- FIX paginação de postagens em categorias selecionada
+- Removido contador de visitas
+
+1.1.6
+Atualização em área administrativa
+- Adicionado Facebook_id em configurações gerais para gerenciamento de todos comentários postagens.
+- Adicionado Facebook_id ao cadastrar autor para gerenciamento de comentários em postagens.
+- Possível salvar postagem e previsualizar postagem na edição.
+- Corrigido editar imagem em post
+
+Atualização em blog
+- Area colaborativa para authores.
+- Corrigido listagem de posts mais vistos durante a semana
+- Criar conta de author, com facebook e via formulário.
+- Alterada ordem de vizualização de visita em Dashboard.
+- Corrigido salvar postagem botão inferior.
+- Corrigido problemas com caracteres especiais.
+- Varias correções de performance
+
+
+
 1.1.5
 Atualização em blog
 - Adicionado meta tags especificas de compartilhamento para redes sociais facebook, google, twitter
 
-
 1.1.4
 Atualização para inicialiação de projeto.
-- feito vários ajustes para quando o projeto se inicia do zero.
+- Feito vários ajustes para quando o projeto se inicia do zero.
 
 Atualização em área administrativa
 - Ajustado sql de contador de visita
@@ -95,7 +148,7 @@ Atualização em blog
 - Adicionado links de redes sociais ao blog
 - Adicionado pagina de contatos ao blog (envia por email e gera uma msg na area administrativa)
 - Adicionado pagina de erro encontrado no site via modal (envia por email e gera uma msg na area administrativa)
-- ajustes de layouts no blog
+- Ajustes de layouts no blog
 
 1.1.1
 Atualização em blog
@@ -105,8 +158,8 @@ Atualização em blog
 
 1.1
 Atualização em blog
-- adicionado paginação em home do blog
-- adicionado listagem de postagens de categorias
+- Adicionado paginação em home do blog
+- Adicionado listagem de postagens de categorias
 
 
 1.0.2
@@ -120,7 +173,7 @@ Atualização em área administrativa
 
 1.0.1
 Atualização em área administrativa 
-- cadastros de novos autores
+- Cadastros de novos autores
 - Adicionado configurações
     - configurações gerais
     - integração (header e body)

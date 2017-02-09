@@ -2,9 +2,9 @@
 <div class = "row menu">
     <div class = "container">
         <div class = "row">
-            <div class = "col-lg-12" style = "background-color:#fff">
+            <div class = "col-xs-12 col-sm-12 col-lg-12" style="background-color:transparent;">
 
-                <nav id = "navbar-example" class = "navbar navbar-custom navbar-static">
+                <nav style="background-color: transparent;" class = "navbar navbar-custom navbar-static">
                     <div class = "container-fluid">
                         <div class = "navbar-header">
                             <button class = "navbar-toggle collapsed" type = "button" data-toggle = "collapse" data-target = ".bs-example-js-navbar-collapse">
@@ -32,11 +32,10 @@
                                                 <?= $row['nome'] ?> <span class="caret"></span> 
                                             </a> 
                                             <ul class="dropdown-menu" aria-labelledby="drop2"> 
-                                                <li><a href="<?= $actual_site . $row['slug'] ?>" title="<?= $row['nome'] ?>" ><?= $row['nome'] ?></a></li>
                                                 <?php
                                                 foreach ($rs as $row1) {
                                                     ?>
-                                                    <li><a href="<?= $actual_site . $row1['slug'] ?>" title="<?= $row1['nome'] ?>" ><?= $row1['nome'] ?></a></li>
+                                                    <li><a href="<?= $actual_site . '/' . $row1['slug'] ?>" title="<?= $row1['nome'] ?>" ><?= $row1['nome'] ?></a></li>
                                                     <?php
                                                 }
                                                 ?>
@@ -47,7 +46,7 @@
                                         //categorias sem subcategorias
                                         ?>
                                         <li class="dropdown">
-                                            <a id="drop" href="<?= $actual_site . $row['slug'] ?>" role="button" aria-haspopup="true" aria-expanded="false" title="<?= $row['nome'] ?>" >
+                                            <a id="drop" href="<?= $actual_site . '/' . $row['slug'] ?>" role="button" aria-haspopup="true" aria-expanded="false" title="<?= $row['nome'] ?>" >
                                                 <?= $row['nome'] ?>
                                             </a>
                                         </li> 

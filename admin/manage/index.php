@@ -36,12 +36,16 @@ include './config.php';
         <!-- DataTables Responsive CSS -->
         <link href="../../assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
 
+        <!-- DataTables Responsive CSS -->
+        <link href="../../assets/css/jquery.datetimepicker.min.css" rel="stylesheet">
+
         <!-- JQuery -->
         <script type="text/javascript" src="../../assets/js/jquery-1.11.1.min.js"></script>
 
         <!-- Check Editor -->
         <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-
+        
+        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -52,7 +56,22 @@ include './config.php';
     </head>
 
     <body>
-
+        <?php
+        if (!is_null($config->getAppid_facebook()) || $config->getAppid_facebook() !== "") {
+            ?>
+            <div id="fb-root"></div>
+            <script>(function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id))
+                        return;
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=<?= $config->getAppid_facebook(); ?>";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>                
+            <?php
+        }
+        ?>
         <div id="wrapper">
 
             <?php include "./menu.php"; ?>

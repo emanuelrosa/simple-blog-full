@@ -32,14 +32,69 @@ function salvaImagem($file) {
     }
 }
 
+function verConfig() {
+    $conf = new Config();
+    $cdao = new ConfigDao();
+    $conf = $cdao->getConfig();
+    if ($conf->getIdconfig() < 1) {
+        $cdao = new ConfigDao();
+        $cdao->addconfig();
+    }
+}
+
+function verSocial() {
+    $social = new Social();
+    $cdao = new SocialDao();
+    $social = $cdao->getSocial();
+    if ($social->getIdsocial() < 1) {
+        $sdao = new SocialDao();
+        $sdao->addsocial();
+    }
+}
+
+function verOption($option_nome) {
+    $opdao = new OptionConfigDao();
+    $rs = $opdao->verificaOptionConfig($option_nome);
+    
+    if ($rs < 1) {
+        $op = new OptionConfig();
+        $opdao = new OptionConfigDao();
+
+        $op->setOption_nome($option_nome);
+        $op->setAutoload('yes');
+
+        $opdao->addOptionConfig($op);
+    }
+}
+
+function editarOptionConfig($op) {
+    $opdao = new OptionConfigDao();
+    $opdao->editOptionConfig('siteurl',$op['siteurl']);
+
+    $opdao = new OptionConfigDao();
+    $opdao->editOptionConfig('anocriado',$op['anocriado']);
+}
+
+verConfig();
+verSocial();
+
+verOption("siteurl");
+verOption("anocriado");
+
+
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case "gerais":
-
             $c = new Config();
             $cdao = new ConfigDao();
 
             $c = $cdao->getConfig();
+
+            $opdao = new OptionConfigDao();
+            $op = $opdao->getOptionConfig();
+
+            $op['siteurl'] = $_POST['inputurl'];
+            $op['anocriado'] = $_POST['inputano'];
 
             $c->setTitulo($_POST['inputtitulo']);
             $c->setAutor($_POST['inputautor']);
@@ -49,6 +104,7 @@ if (isset($_POST['action'])) {
             $cdao = new ConfigDao();
             $rs = $cdao->editInformcoesGeraisConfig($c);
             if ($rs > 0) {
+                editarOptionConfig($op);
                 echo "OK|Informações gerais alteradas com sucesso!";
             }
             break;
@@ -103,7 +159,6 @@ if (isset($_POST['action'])) {
             }
             break;
         case "imglogo":
-
             if (file_exists($_FILES["inputimglogo"]["tmp_name"])) {
                 list($width, $height, $type, $attr) = getimagesize($_FILES["inputimglogo"]["tmp_name"]);
 
@@ -144,7 +199,6 @@ if (isset($_POST['action'])) {
             //echo "OK|retorno img";
             break;
         case "imgadm":
-
             if (file_exists($_FILES["inputimgadm"]["tmp_name"])) {
                 list($width, $height, $type, $attr) = getimagesize($_FILES["inputimgadm"]["tmp_name"]);
 
@@ -185,7 +239,6 @@ if (isset($_POST['action'])) {
             //echo "OK|retorno img";
             break;
         case "imgban":
-
             if (file_exists($_FILES["inputimgban"]["tmp_name"])) {
                 list($width, $height, $type, $attr) = getimagesize($_FILES["inputimgban"]["tmp_name"]);
 
@@ -226,7 +279,6 @@ if (isset($_POST['action'])) {
             //echo "OK|retorno img";
             break;
         case "imggif":
-
             if (file_exists($_FILES["inputimggif"]["tmp_name"])) {
                 list($width, $height, $type, $attr) = getimagesize($_FILES["inputimggif"]["tmp_name"]);
 
@@ -266,7 +318,6 @@ if (isset($_POST['action'])) {
             }
             break;
         case "imgtop":
-
             if (file_exists($_FILES["inputimgtop"]["tmp_name"])) {
                 list($width, $height, $type, $attr) = getimagesize($_FILES["inputimgtop"]["tmp_name"]);
 

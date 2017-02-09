@@ -43,6 +43,29 @@
                                 <input type="text" class="form-control" id="inputnome" name="inputnome" />
                             </div>
                             <div class="form-group">
+                                <label for="inputemail">E-mail</label>
+                                <input type="text" class="form-control" id="inputemail" name="inputemail" />
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group" style="padding-right: 5px;">
+                                        <label for="inputemail">Senha</label>
+                                        <input type="password" class="form-control" id="inputsenha" name="inputsenha" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="inputemail">Confirma Senha</label>
+                                        <input type="password" class="form-control" id="inputconfirmasenha" name="inputconfirmasenha" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputfacebook_id">Facebook ID</label>
+                                <input type="text" class="form-control" id="inputfacebook_id" name="inputfacebook_id" />
+                                <p class="help-block">Adicione o Facebook ID para gerenciamento dos comentários das postagens.</p>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputdescricao">Perfil</label>
                                 <textarea class="form-control" id="inputperfil" name="inputperfil" rows="5"></textarea>
                             </div>
@@ -62,7 +85,7 @@
                     <div class="col-md-8">
                         <div id="listAutor" >
 
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-author">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-author" style="font-size: 12px;">
                                 <thead>
                                     <tr>
                                         <th>Imagem</th>
@@ -78,7 +101,7 @@
                                     foreach ($adao->listAllAutor() as $row) {
                                         ?>
                                         <tr id="<?= $row['idautor'] ?>">
-                                            <td style="text-align: center">
+                                            <td style="text-align: center" style="width: 10%">
                                                 <?php
                                                 if ($row['imagem'] === "") {
                                                     ?>
@@ -89,9 +112,9 @@
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?= $row['nome'] ?></td>
-                                            <td><?= $row['perfil'] ?></td>
-                                            <td id="estado<?= $row['idautor'] ?>" class="center">
+                                            <td style="width: 20%"><?= $row['nome'] ?></td>
+                                            <td style="width: 40%"><?= $row['perfil'] ?></td>
+                                            <td id="estado<?= $row['idautor'] ?>" class="center" style="width: 10%">
                                                 <?php
                                                 //Ações
                                                 if ($row['estado'] == 0) {
@@ -103,7 +126,7 @@
 
                                                 <?= ($row['estado'] == 0) ? '' : '' ?>
                                             </td>
-                                            <td class="center">
+                                            <td class="center" style="width: 15%">
                                                 <button data-id="<?= $row['idautor'] ?>" class="btn btn-sm btn-info btnLoadAutor" > <span class="glyphicon glyphicon-edit"></span> </button>
                                                 <button data-id="<?= $row['idautor'] ?>" class="btn btn-sm btn-danger btnRemove" > <span class="glyphicon glyphicon-remove"></span> </button>
                                             </td>

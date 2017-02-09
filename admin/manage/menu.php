@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html"><img src="../../assets/images/config_img/<?= ($config->getImglogoadmin() == "") ? "default_adm.png" : $config->getImglogoadmin(); ?>" title="<?= $config->getTitulo(); ?>"></a>
+        <a class="navbar-brand" href="./"><img src="../../assets/images/config_img/<?= ($config->getImglogoadmin() == "") ? "default_adm.png" : $config->getImglogoadmin(); ?>" title="<?= $config->getTitulo(); ?>"></a>
     </div>
     <!-- /.navbar-header -->
 

@@ -33,26 +33,19 @@
         <hr>
 
         <!-- Date/Time -->
-        <!-- Date/Time -->
-        <?php
-        $d = strftime("%A, %d de %B de %Y", strtotime($p->getDatahora()));
+            <?php
+            $d = strftime("%A, %d de %B de %Y", strtotime($p->getDatahora()));
 
-        $h = date('H/i/A', strtotime($p->getDatahora()));
-        $h = explode("/", $h);
-        ?>
-        <div class="row">
-            <div class="col-md-9">
-                <p><span class="glyphicon glyphicon-time"></span> Postado em: <?= $d ?> as <?= $h[0] . ":" . $h[1] . " " . $h[2] ?> </p>
-                <p class="resume"><?= $p->getResumo() ?></p>
+            $h = date('H/i/A', strtotime($p->getDatahora()));
+            $h = explode("/", $h);
+            ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><span class="glyphicon glyphicon-time"></span> Postado em: <?= utf8_encode($d) ?> as <?= $h[0] . ":" . $h[1] . " " . $h[2] ?> &nbsp;&nbsp;<span class="glyphicon glyphicon-eye-open"></span> <?= $p->getAberto(); ?> views</p></p>
+                    <p class="resume"><?= $p->getResumo() ?></p>
+                </div>
             </div>
-            <div class="col-md-1">
-                <div class="fb-like" data-href="<?= $actual_link ?>" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false"></div>
-            </div>
-            <div class="col-md-1">
-                <!-- Place this tag where you want the +1 button to render. -->
-                <div class="g-plusone" data-size="tall"></div>
-            </div>
-        </div>
+            <hr>
 
         <hr>
 

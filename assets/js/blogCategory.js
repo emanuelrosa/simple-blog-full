@@ -2,7 +2,7 @@ function dataTableConfig() {
     var conf = {
         responsive: true,
         "aoColumns": [
-            null, {"bSortable": false}, null, null, {"bSortable": false}
+            null, {"bSortable": false}, null, {"bSortable": false}
         ],
         "aaSorting": [],
         "language": {

@@ -73,7 +73,7 @@ $inst = $instdao->getInstitucional('termosuso');
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="inputestado" id="inputestado" value="0" aria-label="..." <?= ($inst->getEstado() === '0') ? "checked" : ""; ?>> Não
+                                                            <input type="radio" name="inputestado" id="inputestado" value="0" aria-label="..." <?= ($inst->getEstado() === '0') ? "checked" : "checked"; ?>> Não
                                                         </label>
                                                     </div>
                                                 </div>

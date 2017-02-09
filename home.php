@@ -4,7 +4,7 @@
     $rs = $pdao->listAllPostActive();
 
     //total de paginas
-    $total_page = ceil($rs->rowCount() / 3);
+    $total_page = ceil($rs->rowCount() / 5);
 
     //Verifica página atual
     if (!isset($_GET['page'])) {
@@ -15,10 +15,12 @@
 
     //Calcula inicio pesquisa
     $inicio = $pc - 1;
-    $inicio = $inicio * $total_page;
+    $inicio = $inicio * 5;
 
     $pdao = new PostDao();
     $rs = $pdao->listAllPostActiveLimit($inicio);
+    
+    //$rs->rowCount();
 
     foreach ($rs as $row) {
         include './vitrine_post.php';
@@ -35,4 +37,7 @@
             <a href="#" class="last" data-action="last">&raquo;</a>
         </div>
     </div>
+</div>
+<div>
+    <?php include './ads1.php'; ?>
 </div>

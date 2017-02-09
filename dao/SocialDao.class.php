@@ -13,6 +13,20 @@ class SocialDao {
         $this->p = new Conexao();
     }
 
+    public function addsocial() {
+        try {
+            $stmt = $this->p->prepare("INSERT INTO `social` (`idsocial`, `facebook`, `twitter`, `whatsapp`, `youtube`, `instagram`, `google`, `pinterest`) VALUES ('', NULL, NULL, NULL, NULL, NULL, NULL, NULL);");
+
+            $rs = $stmt->execute();
+
+            $this->p = null;
+
+            return $rs;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+
     function editSocial(Social $s) {
         try {
             $stmt = $this->p->prepare("UPDATE `social` SET `facebook` = ?, 

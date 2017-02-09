@@ -22,6 +22,7 @@ class Post {
     private $_categoria;
     private $_nomeautor;
     private $_aberto;
+    private $_agendado;
 
     function __construct() {
         $this->setAllAtributes(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -102,6 +103,10 @@ class Post {
         return $this->_aberto;
     }
 
+    function getAgendado() {
+        return $this->_agendado;
+    }
+
     function setIdpost($idpost) {
         $this->_idpost = $idpost;
     }
@@ -157,11 +162,16 @@ class Post {
     function setNomeautor($nomeautor) {
         $this->_nomeautor = $nomeautor;
     }
-    
+
     function setAberto($aberto) {
         $this->_aberto = $aberto;
     }
 
+    function setAgendado($agendado) {
+        $this->_agendado = $agendado;
+    }
+
+    
     public function __toString() {
         return "id = " . $this->_idpost . " | "
                 . "idautor =" . $this->_idautor . " | "
@@ -174,7 +184,8 @@ class Post {
                 . "materia = " . $this->_materia . " | "
                 . "estado = " . $this->_estado . " | "
                 . "comentario = " . $this->_comentario . " |"
-                . "aberto = " . $this->_aberto . "  /n";
+                . "aberto = " . $this->_aberto . " |"
+                . "agendado = " . $this->_agendado . "  /n";
     }
 
 }

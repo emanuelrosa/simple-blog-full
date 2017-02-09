@@ -33,6 +33,11 @@ if (array_key_exists(1, $args)) {
             <div class="panel-body">
                 <div class="row">
                     <div id="error-msg" class="col-md-12"></div>
+                    <div id="load" class="col-md-12">
+                        <div class="alert alert-info">
+                            <span class="fa fa-spinner fa-2x fa-spin"></span> &nbsp;&nbsp;&nbsp;<b>Salvando...</b>
+                        </div>
+                    </div>
                 </div>
 
                 <form id="formpost" action="./actions/blogPost.php">
@@ -73,13 +78,12 @@ if (array_key_exists(1, $args)) {
 
                                 if ($edit) {
                                     ?>
-                                    <a href="<?= "http://$_SERVER[HTTP_HOST]/preview/" . $post->getLink() ?>" target="_blank" class="btn btn-default">Visualizar</a>
+                                    <a href="<?= "http://$_SERVER[HTTP_HOST]/preview/" . $post->getLink() ?>" target="_blank" class="btn btn-info btn-visualizar">Visualizar</a>
+                                    <button class="btn btn-primary btn-salvar">Salvar</button>
                                     <?php
                                 }
                                 ?>
-
-
-                                <button type="submit" class="btn btn-primary">Publicar</button>
+                                <button type="submit" class="btn btn-success">Publicar</button>
                             </div>
                         </div>
                         <hr>
@@ -91,7 +95,18 @@ if (array_key_exists(1, $args)) {
                                 </div>
                                 <div class="form-group">
                                     <label for="inputlink">Link Permanente</label>
-                                    <input type="text" class="form-control" id="inputlink" name="inputlink" placeholder="Link de Acesso." value="<?= (isset($post)) ? $post->getLink() : ""; ?>">
+                                    <?php
+                                    if (isset($post)) {
+                                        ?>
+                                        <input type="hidden" class="form-control" id="inputlink" name="inputlink" placeholder="Link de Acesso." value="<?= $post->getLink() ?>">
+                                        <input type="text" class="form-control" value="<?= $post->getLink(); ?>" disabled="disabled">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <input type="text" class="form-control" id="inputlink" name="inputlink" placeholder="Link de Acesso." value="<?= (isset($post)) ? $post->getLink() : ""; ?>">
+                                        <?php
+                                    }
+                                    ?>
                                     <p class="help-block">O "link permanente" é uma versão amigável do URL. Normalmente, é todo em minúsculas e contém apenas letras, números e hífens..</p>
                                 </div>
                                 <div class="form-group">
@@ -99,6 +114,7 @@ if (array_key_exists(1, $args)) {
                                     <textarea style="display:none;" rows='4' id="inputCont" name="inputCont"><?= (isset($post)) ? $post->getMateria() : ""; ?></textarea>
                                     <script>
                                         CKEDITOR.replace('inputConteudo', {
+                                            uiColor: '#EFF0FC',
                                             filebrowserBrowseUrl: './ckeditor/ckfinder/ckfinder.html',
                                             filebrowserImageBrowseUrl: './ckeditor/ckfinder/ckfinder.html?type=Images',
                                             filebrowserFlashBrowseUrl: './manage/ckeditor/ckfinder/ckfinder.html?type=Flash',
@@ -126,7 +142,7 @@ if (array_key_exists(1, $args)) {
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="collapseEstadoOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div id="collapseEstadoOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                             <div class="panel-body">
 
                                                 <div class="form-group">
@@ -163,7 +179,7 @@ if (array_key_exists(1, $args)) {
                                                     <option value="">Selecione Categoria</option>
                                                     <?php
                                                     $cdao = new CategoriaDao();
-                                                    foreach ($cdao->listActivesCategorias() as $row) {
+                                                    foreach ($cdao->listAllCategorias() as $row) {
                                                         echo '<option value="' . $row['idcategoria'] . '"  ' . ((isset($post)) ? (($post->getIdcategoria() === $row['idcategoria']) ? "SELECTED" : "" ) : "" ) . '>' . $row['nome'] . '</option>';
 
                                                         //lista subcategorias
@@ -194,12 +210,11 @@ if (array_key_exists(1, $args)) {
                                                 <div id="img"></div>
                                                 <div id="fileimg" class="form-group">
                                                     <label for="inputimagem">Escolha a imagem</label>
-                                                    <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
                                                     <div class="image-upload" align='center'>
                                                         <label for="inputimg">
                                                             <?php
                                                             if (isset($post)) {
-                                                                if (is_null($post->getImagem())) {
+                                                                if (is_null($post->getImagem()) || $post->getImagem() == "") {
                                                                     $img = "default-ban.png";
                                                                 } else {
                                                                     $img = $post->getImagem();
@@ -208,11 +223,13 @@ if (array_key_exists(1, $args)) {
                                                                 $img = "default-ban.png";
                                                             }
                                                             ?>
+                                                            <input type="hidden" id="inputeditimg" name="inputeditimg" value="N" >
+
                                                             <img id="imgban" src="../../assets/images/ban_posts/<?= $img ?>" width="100%"/>
 
                                                         </label>
 
-                                                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="" />
+                                                        <input type="file" accept="image/*" name="inputimg" id="inputimg" value="<?= ($img === "default-ban.png") ? "" : $img ?>" />
                                                     </div>
                                                     <!-- preview image ban-->
                                                     <div id="previewimgban">
@@ -228,6 +245,44 @@ if (array_key_exists(1, $args)) {
                                     </div>
                                 </div>
 
+                                <!-- Tag's -->
+                                <div class="panel-group" id="accordionTag" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordionTag" href="#collapseTagOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    TAG's
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTagOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <input type="text" class="form-control" id="inputtags" name="inputtags" placeholder="Tag's" value="<?= (isset($post)) ? $post->getTags() : ""; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Agendamento de Postagem-->
+                                <div class="panel-group" id="accordionComentario" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordionComentario" href="#collapseComentarioOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Agendar postagem
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseComentarioOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control datetimepicker" id="inputagendadopara" name="inputagendadopara" placeholder="aaaa/mm/dd hh:mm" value="<?= (isset($post)) ? $post->getAgendado() : ""; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!--Ativar comentários-->
                                 <div class="panel-group" id="accordionComentario" role="tablist" aria-multiselectable="true">
@@ -260,24 +315,6 @@ if (array_key_exists(1, $args)) {
                                     </div>
                                 </div>
 
-                                <!-- Tag's -->
-                                <div class="panel-group" id="accordionTag" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordionTag" href="#collapseTagOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    TAG's
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTagOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                            <div class="panel-body">
-                                                <input type="text" class="form-control" id="inputtags" name="inputtags" placeholder="Tag's" value="<?= (isset($post)) ? $post->getTags() : ""; ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                         <hr>
@@ -287,14 +324,15 @@ if (array_key_exists(1, $args)) {
                                 if (isset($post)) {
                                     ?><a href="#" class="btn btn-default btn-voltar">Voltar</a><?php
                                 }
-                                
+
                                 if ($edit) {
                                     ?>
-                                    <a href="<?= "http://$_SERVER[HTTP_HOST]/preview/" . $post->getLink() ?>" target="_blank" class="btn btn-default">Visualizar</a>
+                                    <a href="<?= "http://$_SERVER[HTTP_HOST]/preview/" . $post->getLink() ?>" target="_blank" class="btn btn-info btn-visualizar">Visualizar</a>
+                                    <button class="btn btn-primary btn-salvar">Salvar</button>
                                     <?php
                                 }
                                 ?>
-                                <button type="submit" class="btn btn-primary">Publicar</button>
+                                <button type="submit" class="btn btn-success">Publicar</button>
                             </div>
                         </div>
                     </div>
@@ -304,6 +342,9 @@ if (array_key_exists(1, $args)) {
     </div>
 </div>
 
+
+<!-- datetimepicker -->
+<script type="text/javascript" src="../../assets/js/jquery.datetimepicker.full.min.js"></script>
 
 <!-- JavaScript -->
 <script src="../../assets/js/blogPost.js"></script>

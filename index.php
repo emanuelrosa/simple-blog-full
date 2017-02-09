@@ -7,13 +7,13 @@ include_once './config.php';
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="<?= $config->getDescricao(); ?>">
-        <meta name="author" content="<?= $config->getAutor(); ?>">
-        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="author" content="<?= (isset($_GET['post']) && $_GET['post'] != "preview") ? $a->getNome() : $config->getAutor(); ?>">
+        <meta name="msapplication-TileColor" content="#000">
         <meta name="msapplication-TileImage" content="<?= $actual_site; ?>/assets/images/ico/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
 
         <title><?= $config->getTitulo(); ?></title>
-
+        
         <?php
         if (isset($_GET['post']) && $_GET['post'] != "preview") {
 
@@ -34,10 +34,10 @@ include_once './config.php';
 
             <!-- para o Twitter Card-->
             <meta name="twitter:card" value="summary">
-            <meta name="twitter:site" content="@">
+            <meta name="twitter:site" content=" ">
             <meta name="twitter:title" content="<?= $p->getTitulo() ?>">
             <meta name="twitter:description" content="<?= $p->getResumo() ?>">
-            <meta name="twitter:creator" content="@">
+            <meta name="twitter:creator" content=" ">
             <!-- imagens para o Twitter Summary Card precisam ter pelo menos 200×200 px -->
             <meta name="twitter:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>">
 
@@ -45,18 +45,25 @@ include_once './config.php';
             <meta property="fb:app_id" content="<?= $config->getAppid_facebook() ?>" />
             <meta property="og:locale" content="en_US">
             <meta property="og:url" content="<?= $actual_link ?>">
-            <meta property="og:title" content="<?= $p->getTitulo() ?>">
+
             <meta property="og:type" content="website">
             <meta property="og:site_name" content="<?= $config->getTitulo() ?>">
-            <meta property="og:description" content="<?= $p->getResumo() ?>">
-            <meta property="og:image" content="<?= $actual_site; ?>/assets/images/ban_posts/<?= $p->getImagem() ?>" />
             <meta property="og:image:type" content="image/jpeg">
-            <meta property="article:tag" content="<?= $p->getTags() ?>" />
 
-            <meta property="fb:admins" content="[facebook_id]"/>
+            <meta property="fb:admins" content="<?= $a->getFacebook_id() ?>"/>
+            <meta property="fb:admins" content="<?= $config->getFacebook_id() ?>"/>
+            <?php
+        } else {
+            ?>
+            <meta property="fb:app_id" content="<?= $config->getAppid_facebook() ?>" />
+            <meta property="og:title" content="<?= isset($_GET['post']) ? $p->getTitulo() : $config->getTitulo(); ?>">
+            <meta property="og:description" content="<?= isset($_GET['post']) ? $p->getResumo() : $config->getDescricao(); ?>">
+            <meta property="og:image" content="<?= isset($_GET['post']) ? $actual_site . "/assets/images/ban_posts/" . $p->getImagem() : $actual_site . "/assets/images/config_img/" . $config->getImgsocial() ?>" />
             <?php
         }
         ?>
+
+        <link rel="alternate" href="<?= (isset($_GET['post'])) ? $actual_link : $actual_site; ?>" hreflang="pt-br" />
 
         <!-- fav and touch icons -->
         <link rel="apple-touch-icon" sizes="57x57" href="<?= $actual_site; ?>/assets/images/ico/apple-icon-57x57.png">
@@ -74,51 +81,43 @@ include_once './config.php';
         <link rel="icon" type="image/png" sizes="16x16" href="<?= $actual_site; ?>/assets/images/ico/favicon-16x16.png">
         <link rel="manifest" href="<?= $actual_site; ?>/assets/images/ico/manifest.json">
 
-        <!-- CSS -->
-        <link href="<?= $actual_site; ?>/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="<?= $actual_site; ?>/assets/css/font-awesome.min.css" rel="stylesheet" media="screen">
-        <link href='https://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css'>
-        <link href="<?= $actual_site; ?>/assets/css/simple-line-icons.css" rel="stylesheet" media="screen">
-        <link href="<?= $actual_site; ?>/assets/css/animate.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="all" />
 
-        <link href="<?= $actual_site; ?>/assets/css/jqpagination.css" rel="stylesheet">
-
-
-        <!-- Custom styles CSS -->
-        <link href="<?= $actual_site; ?>/assets/css/style.css" rel="stylesheet" media="screen">
-
-        <script src="<?= $actual_site; ?>/assets/js/modernizr.custom.js"></script>
+        <style>
+        <?php
+        if (!is_null($config->getGifload())) {
+            ?>
+                        #preloader{background:#FFF;bottom:0;left:0;position:fixed;right:0;top:0;z-index:9999;}
+                        #status{background-image:url(./assets/images/config_img/<?= $config->getGifload(); ?>);background-position:center;background-repeat:no-repeat;height:200px;left:50%;margin:-100px 0 0 -100px;position:absolute;top:50%;width:200px;}
+                        .pagination { display: inline-block; border: 1px solid #CDCDCD; border-radius: 3px; margin: 0px;} .pagination a { display: block;float: left;width: 20px;/*height: 20px;*/outline: none;border-right: 1px solid #CDCDCD;border-left: 1px solid #CDCDCD;color: #555555;vertical-align: middle;text-align: center;text-decoration: none;font-weight: bold;font-size: 16px;font-family: Times, 'Times New Roman', Georgia, Palatino;/* ATTN: need a better font stack */background-color: #f3f3f3;background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3), color-stop(100%, lightgrey));background-image: -webkit-linear-gradient(#f3f3f3, lightgrey);background-image: linear-gradient(#f3f3f3, lightgrey); }.pagination a:hover, .pagination a:focus, .pagination a:active {background-color: #cecece;background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e4e4e4), color-stop(100%, #cecece));background-image: -webkit-linear-gradient(#e4e4e4, #cecece);background-image: linear-gradient(#e4e4e4, #cecece); }.pagination a.disabled, .pagination a.disabled:hover, .pagination a.disabled:focus, .pagination a.disabled:active {background-color: #f3f3f3;background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3), color-stop(100%, lightgrey));background-image: -webkit-linear-gradient(#f3f3f3, lightgrey);background-image: linear-gradient(#f3f3f3, lightgrey);color: #A8A8A8;cursor: default; }.pagination a:first-child {border: none;border-radius: 2px 0 0 2px; }.pagination a:last-child {border: none;border-radius: 0 2px 2px 0; }.pagination input {float: left;margin: 4px;padding: 0;width: 120px;height: 20px;outline: none;border: none;vertical-align: middle;text-align: center; }/* gigantic class for demo purposes */.gigantic.pagination {margin: 30px 0; }.gigantic.pagination a {height: 60px;width: 60px;font-size: 50px;line-height: 50px; }.gigantic.pagination input {width: 300px;height: 60px;font-size: 30px; }/* log element for demo purposes */ .log {display: none;background-color: #EDEDED;border: 1px solid #B4B4B4;height: 300px;width: 524px;overflow: auto;margin-left: 0;list-style: none;padding: 10px; }.log li {margin-top: 0;margin-bottom: 5px; }
+            <?php
+        }
+        echo file_get_contents("assets/css/bootstrap.min.css");
+        echo file_get_contents("assets/css/font-awesome.min.css");
+        echo file_get_contents("assets/css/jqpagination.css");
+        echo file_get_contents("assets/css/style.css");
+        ?>
+        </style>
 
         <?= $config->getHeader(); ?>
 
+        <script async src="assets/js/load.js" type="text/javascript" ></script>
     </head>
-    <body>
-        <div id="home"></div>
+    <body style="background-color: #EDEDED;">
         <?= $config->getBody(); ?>
-
-        <!-- Facebook Comments appId -->
         <?php
-        if (!is_null($config->getAppid_facebook()) || $config->getAppid_facebook() !== "") {
-            ?>
-            <div id="fb-root"></div>
-            <script>(function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id))
-                        return;
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=<?= $config->getAppid_facebook(); ?>";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));</script>                
-            <?php
+        if (!isset($_SERVER['HTTP_USER_AGENT']) || stripos($_SERVER['HTTP_USER_AGENT'], 'Speed Insights') === false) {
+            include_once './facebook-pixel-code.php';
         }
+        ?>
 
-
+        <div id="home"></div>
+        <?php
         if (!is_null($config->getGifload())) {
             ?>
             <!-- Preloader -->
             <div id="preloader">
-                <div id="status" style="background-image: url(./assets/images/config_img/<?= $config->getGifload(); ?>);"></div>
+                <div id="status" class="img-load"></div>
             </div>
             <?php
         }
@@ -149,20 +148,9 @@ include_once './config.php';
 
                 <!-- Blog Post Content Column -->
                 <div class="col-lg-8">
-
                     <div id="contentcolumn">
                         <!-- ADS 1 -->
-                        <div class="ads">
-                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                            <!-- 728x90-CCG-Final Post -->
-                            <ins class="adsbygoogle"
-                                 style="display:inline-block;width:728px;height:90px"
-                                 data-ad-client="ca-pub-6170961506359362"
-                                 data-ad-slot="6022404340"></ins>
-                            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-                            </script>
-                        </div>
+                        <?php include './ads1.php'; ?>
                         <!-- ./ADS 1 -->
 
 
@@ -215,6 +203,7 @@ include_once './config.php';
                 <div class="col-md-4">
                     <!-- Social Links -->
                     <div>
+                        <h4>Compartilhe</h4>
                         <div class="social-share">
 
                             <?php
@@ -223,12 +212,17 @@ include_once './config.php';
                             if ($s->getFacebook() !== "") {
                                 echo "<a href='" . $s->getFacebook() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-facebook'><i class='fa fa-facebook-square fa-3x'></i></a> ";
                             }
-
+                            if ($s->getTwitter() !== "") {
+                                echo "<a href='" . $s->getTwitter() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-twitter'><i class='fa fa-twitter-square fa-3x'></i></a>";
+                            }
                             if ($s->getWhatsapp() !== "") {
                                 echo "<a href=\"whatsapp://send?text='" . $s->getWhatsapp() . "'\" class='azm-social azm-size-48 azm-r-square azm-whatsapp'><i class='fa fa-whatsapp fa-3x'></i></a>";
                             }
-                            if ($s->getTwitter() !== "") {
-                                echo "<a href='" . $s->getTwitter() . "' target='_blank' class='azm-social azm-size-48 azm-r-square azm-twitter'><i class='fa fa-twitter-square fa-3x'></i></a>";
+                            if ($s->getYoutube() !== "") {
+                                echo "<a href='" . $s->getYoutube() . "' title='Canal Youtube' target='_blank' class='azm-social azm-size-48 azm-r-square azm-pinterest'><i class='fa fa-youtube-square fa-3x'></i></a>";
+                            }
+                            if ($s->getInstagram() !== "") {
+                                echo "<a href='" . $s->getInstagram() . "' title='Instagram' target='_blank' class='azm-social azm-size-48 azm-r-square azm-instagram'><i class='fa fa-instagram fa-3x'></i></a>";
                             }
                             if ($s->getGoogle() !== "") {
                                 echo "<a href='" . $s->getGoogle() . "' title='Google Plus' target='_blank' class='azm-social azm-size-48 azm-r-square azm-google-plus'><i class='fa fa-google-plus-square fa-3x'></i></a>";
@@ -236,11 +230,15 @@ include_once './config.php';
                             if ($s->getPinterest() !== "") {
                                 echo "<a href='" . $s->getPinterest() . "' title='Pin it' target='_blank' class='azm-social azm-size-48 azm-r-square azm-pinterest'><i class='fa fa-pinterest-square fa-3x'></i></a>";
                             }
-                            if ($s->getYoutube() !== "") {
-                                echo "<a href='" . $s->getPinterest() . "' title='Canal Youtube' target='_blank' class='azm-social azm-size-48 azm-r-square azm-pinterest'><i class='fa fa-youtube-square fa-3x'></i></a>";
-                            }
                             ?>
-
+<!--                            <script id="_wau4f6">var _wau = _wau || [];
+                                _wau.push(["classic", "tpwj3xqbn0xm", "4f6"]);
+                                (function () {
+                                    var s = document.createElement("script");
+                                    s.async = true;
+                                    s.src = "http://widgets.amung.us/classic.js";
+                                    document.getElementsByTagName("head")[0].appendChild(s);
+                                })();</script>-->
                         </div>
                     </div>
 
@@ -258,20 +256,6 @@ include_once './config.php';
                         <!-- /.input-group -->
                     </div>
 
-                    <!-- ADS 2-->
-                    <div class="ads">
-                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                        <!-- ret_grande_336x280 -->
-                        <ins class="adsbygoogle"
-                             style="display:inline-block;width:336px;height:280px"
-                             data-ad-client="ca-pub-6170961506359362"
-                             data-ad-slot="9456294340"></ins>
-                        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
-                    <!-- ./ ADS 2-->
-
                     <!-- Last posts -->
                     <div class="lastpost">
                         <h4>Últimas Postagens</h4>
@@ -288,21 +272,24 @@ include_once './config.php';
                     </div>
 
                     <!-- Facebook timeline -->
-                    <div align='center'>
-                        <?php
-                        if ($s->getFacebook() !== "") {
-                            ?><div class="fb-page" data-href="<?= $s->getFacebook() ?>" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="<?= $s->getFacebook() ?>" class="fb-xfbml-parse-ignore"><a href="<?= $s->getFacebook() ?>"><?= $config->getTitulo(); ?></a></blockquote></div><?php
-                        }
+                    <?php
+                    if ($s->getFacebook() !== "") {
                         ?>
-                    </div>
+                        <div id="div-face" align='center'>
+                            <div class="fb-page" data-href="<?= $s->getFacebook() ?>" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="<?= $s->getFacebook() ?>" class="fb-xfbml-parse-ignore"><a href="<?= $s->getFacebook() ?>"><?= $config->getTitulo(); ?></a></blockquote></div>
+                        </div>
+                        <?php
+                    }
+                    ?>
 
-                    <!-- Sucessos da semana -->
+                    <!-- Melhroes da semana -->
                     <div class="top-week">
                         <h4>Melhores da Semana</h4>
                         <hr>
                         <?php
                         $pdao = new PostDao();
-                        foreach ($pdao->listTopViews() as $row) {
+                        $rs = $pdao->listTopViews();
+                        foreach ($rs as $row) {
                             ?>
                             <div class="post">
                                 <div class="img" style="background-image: url('<?= $actual_site; ?>/assets/images/ban_posts/<?= $row['imagem'] ?>'); background-size: 100%"></div>
@@ -311,21 +298,9 @@ include_once './config.php';
                             <?php
                         }
                         ?>
-
                     </div>
-
                     <!-- ADS 4-->
-                    <div class="ads">
-                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                        <!-- 300x600_lateral -->
-                        <ins class="adsbygoogle"
-                             style="display:inline-block;width:300px;height:600px"
-                             data-ad-client="ca-pub-6170961506359362"
-                             data-ad-slot="5030922341"></ins>
-                        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
+                    <?php include './ads4.php'; ?>
                     <!-- ./ ADS 4-->
                 </div>
 
@@ -335,101 +310,33 @@ include_once './config.php';
             <hr>
 
             <!-- Footer -->
-            <footer>
-                <!-- Error site modal -->
-                <div class="modal fade" id="errorSiteModal" tabindex="-1" role="dialog" aria-labelledby="errorSiteModal">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <form id="error-form" action="assets/php/error.php" >
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Erro no site?</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="loading alert alert-info">
-                                                <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                                                <span class="sr-only">Loading...</span> Estamos enviando sua mensagem...
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 ajax-response"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputnome">Nome</label>
-                                                <input type="text" class="form-control" id="inputnome" name="inputnome">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputemail">Email</label>
-                                                <input type="email" class="form-control" id="inputemail" name="inputemail">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="inputmsg">Mensagem</label>
-                                            <textarea class="form-control" id="inputmsg" name="inputmsg" rows="5" ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-primary">Enviar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-lg-7">
-                        <a href="./about" title="" >Sobre o site</a> | 
-                        <a href="./terms" title="" >Termos de uso</a> | 
-                        <a href="./privacy" title="" >Politica de privacidade</a> |
-                        <a href="#" title="Mensagem de error" data-toggle="modal" data-target="#errorSiteModal" >Encontrou algum erro?</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-7">
-                        <p>Copyright &copy; <?= $actual_site ?> 2016 - Todos os direitos reservados.</p>
-                    </div>
-                    <div class="col-lg-5" align='right'>
-                        <p>Por <a href="http://www.mfagencia.com.br" title="">MF Agência</a></p>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </footer>
-
+            <?php include_once './footer.php'; ?>
         </div>
         <!-- /.container -->
 
         <!-- Blog end -->
-
-        <!-- Scroll to top -->
-        <div class="scroll-up">
-            <a href="#home"><i class="fa fa-angle-up"></i></a>
+        <!-- ads mobile -->
+        <div id="ads-mb" class="ads-mb visible-xs visible-sm">
+            <!--<a href="#" class="btn-fecharadsmb"> Fechar Anúncio</a>-->
+            <?php include "./ads-mb.php"; ?>  
         </div>
 
         <!-- Scroll to top end-->
 
 
+        <!-- CSS -->
+        <link href="assets/css/simple-line-icons.css" rel="stylesheet" media="all" />
+        <link href="assets/css/animate.css" rel="stylesheet" media="all" />
+        <link href='https://fonts.googleapis.com/css?family=Michroma' rel='stylesheet' type='text/css' />
+
         <!-- Javascript files -->
-
-        <script src="<?= $actual_site; ?>/assets/js/jquery-1.11.1.min.js"></script>
-        <script src="<?= $actual_site; ?>/assets/js/bootstrap.min.js"></script>
-        <script src="<?= $actual_site; ?>/assets/js/imagesloaded.pkgd.js"></script>
-        <script src="<?= $actual_site; ?>/assets/js/jquery.sticky.js"></script>
-        <script src="<?= $actual_site; ?>/assets/js/jquery.cbpQTRotator.js"></script>
-
-        <script src="<?= $actual_site; ?>/assets/js/jquery.jqpagination.min.js"></script>
-        <script src="<?= $actual_site; ?>/assets/js/custom.js"></script>
+        <?php
+        if (!isset($_SERVER['HTTP_USER_AGENT']) || stripos($_SERVER['HTTP_USER_AGENT'], 'Speed Insights') === false) {
+            ?>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <?php
+        }
+        ?>
 
     </body>
 </html>

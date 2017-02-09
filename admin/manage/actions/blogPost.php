@@ -17,7 +17,7 @@ function renomear() {
 
 function salvaImagem($file) {
     $temp_name = $file['tmp_name'];
-    $formato = split("/", $file['type']);
+    $formato = explode("/", $file['type']);
 
     $name = renomear() . "." . $formato[1];
     //verifica formato 
@@ -64,6 +64,11 @@ if (isset($_POST['action'])) {
 
             $p->setAllAtributes($idpost, $idautor, $link, $tags, $imagem, $titulo, $datahora, $resumo, $materia, $estado, $comentario, $aberto);
 
+            if($_POST['inputagendadopara'] != ""){
+                
+                $p->setAgendado($_POST['inputagendadopara']);
+            }
+            
             $idpost = $pdao->inserirPost($p);
 
             if ($idpost > 0) {
@@ -89,11 +94,23 @@ if (isset($_POST['action'])) {
 
             //adiciono nova imagem
             if ($_POST['inputeditimg'] === 'S') {
-
                 //se tiver imagem antiga salva remove!
                 if (!is_null($p->getImagem()) && file_exists("../../../assets/images/ban_posts/" . $p->getImagem())) {
                     //remove imagem antiga
                     unlink("../../../assets/images/ban_posts/" . $p->getImagem());
+                    
+                    //existir imagem nova salva!
+                    if ($_FILES["inputimg"]["name"] !== "" && isset($_FILES)) {
+                        $nomeimg = salvaImagem($_FILES["inputimg"]);
+
+                        if ($nomeimg === "ERROR") {
+//                    echo "ERROR|img";
+                            $nomeimg = "";
+                        }
+                    } else {
+                        $nomeimg = "";
+                    }
+                    
                 } else {
                     //existir imagem nova salva!
                     if ($_FILES["inputimg"]["name"] !== "" && isset($_FILES)) {
@@ -129,6 +146,10 @@ if (isset($_POST['action'])) {
 
             $p->setAllAtributes($idpost, $idautor, $link, $tags, $imagem, $titulo, $datahora, $resumo, $materia, $estado, $comentario, $aberto);
 
+            if($_POST['inputagendadopara'] != ""){
+                $p->setAgendado($_POST['inputagendadopara']);
+            }
+            
             if ($pdao->alterarPost($p) > 0) {
                 //desvincula categoria
                 $pdao = new PostDao();

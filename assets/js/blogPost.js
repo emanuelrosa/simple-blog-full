@@ -1,4 +1,8 @@
 jQuery(function ($) {
+    $('.datetimepicker').datetimepicker();
+
+    $('#load').css('display', 'none');
+
     //se não tiver post para editar
     var queryPairs = window.location.href.split('?').pop().split('&');
     for (var i = 0; i < queryPairs.length; i++) {
@@ -13,12 +17,16 @@ jQuery(function ($) {
     }
 
     $('#inputtitulo').keyup(function () {
-        var newString = $('#inputtitulo').val().toLowerCase().replace(/[^A-Z0-9]/ig, "_");
-        $('#inputlink').val(newString);
+        if ($('#inputid').val() === '') {
+            var newString = $('#inputtitulo').val().toLowerCase().replace(/[^A-Z0-9]/ig, "_");
+            $('#inputlink').val(newString);
+        }
     });
     $('#inputtitulo').focusout(function () {
-        var newString = $('#inputtitulo').val().toLowerCase().replace(/[^A-Z0-9]/ig, "_");
-        $('#inputlink').val(newString);
+        if ($('#inputid').val() === '') {
+            var newString = $('#inputtitulo').val().toLowerCase().replace(/[^A-Z0-9]/ig, "_");
+            $('#inputlink').val(newString);
+        }
     });
     $('#btn-autor').click(function () {
         if ($('#inputautor option:selected').val() !== "") {
@@ -80,7 +88,11 @@ jQuery(function ($) {
         $(".image-upload").css("display", 'block');
         return false;
     });
+
     $("#formpost").submit(function () {
+        $('#load').css('display', 'block');
+        $('#load').focus();
+
         var texto = CKEDITOR.instances.inputConteudo.getData();
         $('#inputCont').val(texto);
         var formURL = $("#formpost").attr('action');
@@ -95,14 +107,17 @@ jQuery(function ($) {
         if ($('#inputtitulo').val() === "") {
             $('#error-msg').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Título da postagem obrigatório.</div>');
             $('#inputtitulo').focus();
+            $('#load').css('display', 'none');
             return false;
         } else if ($('#inputlink').val() === "") {
             $('#error-msg').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Link poermanente para postagem obrigatório.</div>');
             $('#inputlink').focus();
+            $('#load').css('display', 'none');
             return false;
         } else if ($('#selectCategoria option:selected').val() === "") {
             $('#error-msg').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Selecione a categoria para a postagem, sua postagem precisa estár em uma categoria.</div>');
             $('#selectCategoria').focus();
+            $('#load').css('display', 'none');
             return false;
 
         }
@@ -120,6 +135,47 @@ jQuery(function ($) {
                 if (msg[0] === "OK") {
                     window.location.href = "./?bloglist";
                 } else {
+                    $('#load').css('display', 'none');
+                    $('#error-msg').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Error: ' + msg + '</div>');
+                }
+            }
+        });
+        return false;
+    });
+    $(".btn-salvar").on('click', function () {
+        $('#load').css('display', 'block');
+        $('#load').focus();
+
+        var texto = CKEDITOR.instances.inputConteudo.getData();
+        $('#inputCont').val(texto);
+
+        var formURL = $("#formpost").attr('action');
+        var fd = new FormData(document.querySelector("#formpost"));
+        if ($('#inputid').val() === '') {
+            fd.append("action", "add");
+        } else {
+            fd.append("action", "edit");
+        }
+
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: fd,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (msg) {
+                //alert(msg);
+                var msg = msg.split("|");
+                if (msg[0] === "OK") {
+                    //get url
+                    var hostname = window.location.hostname;
+                    //altera link visualizar
+                    $('.btn-visualizar').attr('href', 'http://' + hostname + '/preview/' + $('#inputlink').val());
+                    $('#error-msg').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Success: ' + msg + '</div>');
+                    $('#load').css('display', 'none');
+                } else {
+                    $('#load').css('display', 'none');
                     $('#error-msg').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Error: ' + msg + '</div>');
                 }
             }

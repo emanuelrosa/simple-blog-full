@@ -56,13 +56,12 @@
                     <div class="col-md-8">
                         <div id="listCategoria" >
 
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-category">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-category" style="font-size: 12px;">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
                                         <th>Descrição</th>
-                                        <th>Slug</th>
-                                        <th>Contagem</th>
+                                        <th>Post</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -72,11 +71,10 @@
                                     foreach ($cdao->listAllCategorias() as $row) {
                                         ?>
                                         <tr id="<?= $row['idcategoria'] ?>">
-                                            <td><?= $row['nome'] ?></td>
-                                            <td><?= $row['descricao'] ?></td>
-                                            <td><?= $row['slug'] ?></td>
-                                            <td align="center"><?= $row['contpost'] ?></td>
-                                            <td align="center">
+                                            <td style="width: 30%"><a href="" title="<?= 'Slug: ' . $row['slug'] ?>" alt="<?= $row['nome'] ?>"><?= $row['nome'] ?></a></td>
+                                            <td style="width: 40%"><?= $row['descricao'] ?></td>
+                                            <td align="center"  style="width: 5%"><?= $row['contpost'] ?></td>
+                                            <td align="center"  style="width: 25%">
                                                 <?php
                                                 if ($row['estado'] == 0) {
                                                     ?><button id="btnEstado-<?= $row['idcategoria'] ?>" data-id="<?= $row['idcategoria'] ?>" class="btn btn-sm btn-danger btnChangeEstado" > <span class="glyphicon glyphicon-eye-close"></span> </button><?php

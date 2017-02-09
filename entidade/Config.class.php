@@ -21,12 +21,13 @@ class Config {
     private $_palavra_chave;
     private $_appid_facebook;
     private $_num_comentarios_visivel;
+    private $_facebook_id;
 
     function __construct() {
-        $this->setAllAtributes(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        $this->setAllAtributes(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
-    function setAllAtributes($idconfig, $gifload, $imglogo, $imgtopo, $imgsocial, $imglogoadmin, $titulo, $descricao, $autor, $header, $body, $palavra_chave, $appid_facebook, $num_comentarios_visivel) {
+    function setAllAtributes($idconfig, $gifload, $imglogo, $imgtopo, $imgsocial, $imglogoadmin, $titulo, $descricao, $autor, $header, $body, $palavra_chave, $appid_facebook, $num_comentarios_visivel, $facebook_id) {
         $this->_idconfig = $idconfig;
         $this->_gifload = $gifload;
         $this->_imglogo = $imglogo;
@@ -41,6 +42,7 @@ class Config {
         $this->_palavra_chave = $palavra_chave;
         $this->_appid_facebook = $appid_facebook;
         $this->_num_comentarios_visivel = $num_comentarios_visivel;
+        $this->_facebook_id = $facebook_id;
     }
 
     function getIdconfig() {
@@ -99,6 +101,10 @@ class Config {
         return $this->_num_comentarios_visivel;
     }
 
+    function getFacebook_id() {
+        return $this->_facebook_id;
+    }
+
     function setIdconfig($idconfig) {
         $this->_idconfig = $idconfig;
     }
@@ -155,6 +161,11 @@ class Config {
         $this->_num_comentarios_visivel = $num_comentarios_visivel;
     }
 
+    function setFacebook_id($facebook_id) {
+        $this->_facebook_id = $facebook_id;
+    }
+
+    
     public function __toString() {
         return "ID: " . $this->_idconfig
                 . "| GifLoad: " . $this->_gifload
@@ -169,7 +180,8 @@ class Config {
                 . "| body: " . $this->_body
                 . "| palavra-chave: " . $this->_palavra_chave
                 . "| appid_facebook: " . $this->_appid_facebook
-                . "| num_comentarios_visual: " . $this->_num_comentarios_visivel;
+                . "| num_comentarios_visual: " . $this->_num_comentarios_visivel
+                . "| facebook_id: " . $this->_facebook_id;
     }
 
 }

@@ -9,6 +9,28 @@ function __autoload($nomeClasse) {
     }
 }
 
+function editInstitucional(Institucional $inst) {
+    $idao = new InstitucionalDao();
+    $rs = $idao->editInstitucional($inst);
+
+    if ($rs > 0) {
+        return "OK| Texto atualizado com sucesso!|" . $inst->getIdinstitucional();
+    } else {
+        $idao = new InstitucionalDao();
+        $rs = $idao->addInstitucional($inst);
+
+        if ($rs > 0) {
+            $inst_n = new Institucional();
+            $instdao = new InstitucionalDao();
+
+            $inst_n = $instdao->getInstitucional($inst_n->getArea());
+            return "OK| Texto adicionado com sucesso!|" . $inst_n->getIdinstitucional();
+        } else {
+            return "Error| Não foi possível fazer as alterações.";
+        }
+    }
+}
+
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case "about":
@@ -21,30 +43,19 @@ if (isset($_POST['action'])) {
 
             $inst->setAllAtributes($idinstitucional, $area, $texto, $estado);
 
-            $idao = new InstitucionalDao();
-            if ($idao->editInstitucional($inst) > 0) {
-                echo "OK|Texto atualizado com sucesso!";
-            } else {
-                echo "Error|Não foi possível fazer as alterações.";
-            }
-
+            echo editInstitucional($inst);
             break;
         case "terms":
             $inst = new Institucional();
 
             $idinstitucional = $_POST['inputid'];
-            $area = 'termouso';
+            $area = 'termosuso';
             $texto = $_POST['inputCont'];
             $estado = $_POST['inputestado'];
 
             $inst->setAllAtributes($idinstitucional, $area, $texto, $estado);
 
-            $idao = new InstitucionalDao();
-            if ($idao->editInstitucional($inst) > 0) {
-                echo "OK|Texto atualizado com sucesso!";
-            } else {
-                echo "Error|Não foi possível fazer as alterações.";
-            }
+            echo editInstitucional($inst);
             break;
         case "privacy":
             $inst = new Institucional();
@@ -56,12 +67,7 @@ if (isset($_POST['action'])) {
 
             $inst->setAllAtributes($idinstitucional, $area, $texto, $estado);
 
-            $idao = new InstitucionalDao();
-            if ($idao->editInstitucional($inst) > 0) {
-                echo "OK|Texto atualizado com sucesso!";
-            } else {
-                echo "Error|Não foi possível fazer as alterações.";
-            }
+            echo editInstitucional($inst);
 
             break;
         case "social":

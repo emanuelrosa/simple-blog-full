@@ -81,7 +81,7 @@ class VisitaDao {
 
     public function listUltamasVisitasSemana() {
         try {
-            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() group by data");
+            $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() group by data DESC");
             return $stmt;
         } catch (PDOException $exc) {
             echo $exc->getMessage();
@@ -93,10 +93,55 @@ class VisitaDao {
             $stmt = $this->p->query("SELECT *, sum(cont) as cont FROM `visita` WHERE 
                 `data` BETWEEN CURRENT_DATE() - INTERVAL 7 DAY AND CURRENT_DATE() AND 
                 ((`url` != '/about') AND (`url` != '/terms') AND (`url` != '/privacy') AND (`url` != '/contact') ) group by url ORDER BY cont DESC LIMIT 0 , 10");
-            
+
             return $stmt;
         } catch (PDOException $exc) {
             echo $exc->getMessage();
+        }
+    }
+
+    public function getCountAllView() {
+        try {
+            $stmt = $this->p->query("SELECT sum(cont) AS cont FROM `visita` ");
+
+            $c = 0;
+            foreach ($stmt as $row) {
+                $c = $row['cont'];
+            }
+
+            return $c;
+        } catch (PDOException $ex) {
+            return $ex->getMessage();
+        }
+    }
+    
+    public function getCountViewLastMonth() {
+        try {
+            $stmt = $this->p->query("SELECT sum(cont) AS cont FROM `visita` WHERE MONTH(data) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)");
+
+            $c = 0;
+            foreach ($stmt as $row) {
+                $c = $row['cont'];
+            }
+
+            return $c;
+        } catch (PDOException $ex) {
+            return $ex->getMessage();
+        }
+    }
+    
+    public function getCountViewActualMonth() {
+        try {
+            $stmt = $this->p->query("SELECT sum(cont) AS cont FROM `visita` WHERE MONTH(data) = MONTH(CURRENT_DATE)");
+
+            $c = 0;
+            foreach ($stmt as $row) {
+                $c = $row['cont'];
+            }
+
+            return $c;
+        } catch (PDOException $ex) {
+            return $ex->getMessage();
         }
     }
 

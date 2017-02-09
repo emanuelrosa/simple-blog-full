@@ -33,6 +33,10 @@ function resetForm() {
     $("#inputestado").val('');
 
     $("#inputnome").val('');
+    $("#inputemail").val('');
+    $("#inputsenha").val('');
+    $("#inputconfirmasenha").val('');
+    $("#inputfacebook_id").val('');
     $("#inputperfil").val('');
 }
 
@@ -56,8 +60,12 @@ jQuery(function ($) {
                     $('#imguser').attr('src', (msg[2] === '') ? '../../assets/images/authors/user-default.png' : '../../assets/images/authors/' + msg[2]);
 
                     $("#inputnome").val(msg[3]);
-                    $("#inputperfil").val(msg[4]);
-                    $("#inputestado").val(msg[5]);
+                    $("#inputemail").val(msg[4]);
+                    $("#inputsenha").val(msg[5]);
+                    $("#inputconfirmasenha").val(msg[5]);
+                    $("#inputperfil").val(msg[6]);
+                    $("#inputfacebook_id").val(msg[7]);
+                    $("#inputestado").val(msg[8]);
 
                     $('#btnAdd').css('display', 'none');
                     $('#btnEdit').css('display', 'block');
@@ -69,7 +77,7 @@ jQuery(function ($) {
     $(document).on('click', '.btnRemove', function () {
         var id = $(this).attr('data-id');
 
-        bootbox.confirm("Você têm certeza que deseja remover esta categoria, todas as postagens desta categoria também serão removidas do banco de dados?", function (result) {
+        bootbox.confirm("Você têm certeza que deseja remover este autor, todas as postagens deste autor também serão removidos do banco de dados?", function (result) {
             if (result) {
 
                 $.ajax({

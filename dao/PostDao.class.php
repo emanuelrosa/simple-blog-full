@@ -35,8 +35,8 @@ class PostDao {
 
             $stmt = $this->p->prepare("INSERT INTO `post` (`idpost`, "
                     . "`autor_idautor`, `link`, `tags`, `imagem`, `titulo`, "
-                    . "`datahora`, `resumo`, `materia`, `estado`, `comentario`, `aberto`) "
-                    . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);");
+                    . "`datahora`, `resumo`, `materia`, `estado`, `comentario`, `aberto`, `agendado`) "
+                    . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?);");
             $stmt->bindValue(1, $id);
             $stmt->bindValue(2, $post->getIdautor());
             $stmt->bindValue(3, $post->getLink());
@@ -48,6 +48,7 @@ class PostDao {
             $stmt->bindValue(9, $post->getMateria());
             $stmt->bindValue(10, $post->getEstado());
             $stmt->bindValue(11, $post->getComentario());
+            $stmt->bindValue(12, $post->getAgendado());
 
             $rs = $stmt->execute();
 
@@ -81,7 +82,7 @@ class PostDao {
         try {
             $stmt = $this->p->prepare("UPDATE `post` SET `link` = ?, `tags` = ?, "
                     . "`imagem` = ?, `titulo` = ?, `resumo` = ?, `materia` = ?, "
-                    . "`estado` = ?, `comentario` = ? WHERE `idpost` = ?;");
+                    . "`estado` = ?, `comentario` = ?, `agendado` = ? WHERE `idpost` = ?;");
             $stmt->bindValue(1, $post->getLink());
             $stmt->bindValue(2, $post->getTags());
             $stmt->bindValue(3, $post->getImagem());
@@ -90,7 +91,8 @@ class PostDao {
             $stmt->bindValue(6, $post->getMateria());
             $stmt->bindValue(7, $post->getEstado());
             $stmt->bindValue(8, $post->getComentario());
-            $stmt->bindValue(9, $post->getIdpost());
+            $stmt->bindValue(9, $post->getAgendado());
+            $stmt->bindValue(10, $post->getIdpost());
 
             $rs = $stmt->execute();
 
@@ -129,6 +131,8 @@ class PostDao {
 
                 $post->setAllAtributes($idpost, $idautor, $link, $tags, $imagem, $titulo, $datahora, $resumo, $materia, $estado, $comentario, $aberto);
 
+                $post->setAgendado($row['agendado']);
+                
                 $post->setIdcategoria($row['idcategoria']);
                 $post->setCategoria($row['cnome']);
             }
@@ -213,7 +217,7 @@ class PostDao {
 
     function listAllPost() {
         try {
-            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, "
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.agendado, P.link,"
                     . "P.`estado`, A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria` FROM `post` P "
                     . "LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` "
                     . "LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` "
@@ -228,16 +232,56 @@ class PostDao {
             echo $exc->getMessage();
         }
     }
+    
+    function listAllPostByAuthor($idautor) {
+        try {
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`link`,"
+                    . "P.`estado`, A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria` FROM `post` P "
+                    . "LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` "
+                    . "LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` "
+                    . "LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor` "
+                    . "WHERE P.`autor_idautor` = ? "
+                    . "ORDER BY `datahora` DESC");
+            $stmt->bindValue(1, $idautor);
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
 
     function listAllPostActive() {
         try {
-            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
-                P.`link`, P.`tags`, P.`estado`, P.`resumo`,  A.`nome` as `nomeautor`, 
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`,  P.agendado, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`,  A.`nome` as `nomeautor`,  P.link,
                 C.`nome` AS `nomecategoria` FROM `post` P 
                 LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
                 LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` 
                 LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
                 WHERE P.`estado` = 1 ORDER BY datahora DESC");
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+    
+    function listAllPostActiveByAuthor($idautor) {
+        try {
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`,  A.`nome` as `nomeautor`, P.`aberto`,
+                C.`nome` AS `nomecategoria` FROM `post` P 
+                LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
+                LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` 
+                LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
+                WHERE P.`autor_idautor` = ? AND P.`estado` = 1 ORDER BY datahora DESC");
+            $stmt->bindValue(1, $idautor);
             $stmt->execute();
 
             $this->p = NULL;
@@ -275,7 +319,7 @@ class PostDao {
     function listAllPostActiveLimit($inicio) {
         try {
             $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
-                P.`link`, P.`tags`, P.`estado`, P.`resumo`,  A.`nome` as `nomeautor`, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`, P.`aberto`,  A.`nome` as `nomeautor`, 
                 C.`nome` AS `nomecategoria` FROM `post` P 
                 LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
                 LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` 
@@ -317,8 +361,7 @@ class PostDao {
 
     function listLastFivePostActive() {
         try {
-            $stmt = $this->p->prepare("SELECT * FROM `post` P "
-                    . "WHERE P.`estado` = 1 ORDER BY P.`datahora` DESC LIMIT 0,5");
+            $stmt = $this->p->prepare("SELECT * FROM `post` P WHERE P.`estado` = 1 ORDER BY P.`datahora` DESC LIMIT 0,5");
             $stmt->execute();
 
             $this->p = NULL;
@@ -331,7 +374,7 @@ class PostDao {
 
     function listAllPostInative() {
         try {
-            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, "
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.agendado, P.link, "
                     . "P.`estado`, A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria` FROM `post` P "
                     . "LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` "
                     . "LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` "
@@ -346,16 +389,56 @@ class PostDao {
             echo $exc->getMessage();
         }
     }
+    
+    function listAllPostInativeByAuthor($idautor) {
+        try {
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, "
+                    . "P.`estado`, A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria` FROM `post` P "
+                    . "LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` "
+                    . "LEFT JOIN `categoria` C ON C.`idcategoria` = PC.`categoria_idcategoria` "
+                    . "LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`"
+                    . "WHERE P.`autor_idautor` = ? AND P.`estado` = 2");
+            $stmt->bindValue(1, $idautor);
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
 
     function listAllPostActiveByCategory($idcategory) {
         try {
             $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
-                P.`link`, P.`tags`, P.`estado`, P.`resumo`, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`, P.aberto,
                 A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria`  FROM `post` P 
                 LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
                 LEFT JOIN `categoria` C ON PC.`categoria_idcategoria` = C.`idcategoria` 
                 LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
                 WHERE P.`estado` = 1 AND PC.`categoria_idcategoria` = ? ORDER BY `datahora` DESC");
+            $stmt->bindValue(1, $idcategory);
+
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+    
+    function listAllPostActiveByCategoryLimit($idcategory, $inicio = 0) {
+        try {
+            $stmt = $this->p->prepare("SELECT P.`idpost`, P.`titulo`, P.`datahora`, P.`imagem`, 
+                P.`link`, P.`tags`, P.`estado`, P.`resumo`, P.aberto,
+                A.`nome` as `nomeautor`, C.`nome` AS `nomecategoria`  FROM `post` P 
+                LEFT JOIN `post_has_categoria` PC ON PC.`post_idpost` = P.`idpost` 
+                LEFT JOIN `categoria` C ON PC.`categoria_idcategoria` = C.`idcategoria` 
+                LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
+                WHERE P.`estado` = 1 AND PC.`categoria_idcategoria` = ? ORDER BY `datahora` DESC LIMIT $inicio , 5");
             $stmt->bindValue(1, $idcategory);
 
             $stmt->execute();
@@ -432,7 +515,17 @@ class PostDao {
 
     public function listTopViews() {
         try {
-            $stmt = $this->p->query("SELECT * FROM `post` WHERE `imagem` != '' AND `estado` = 1 ORDER BY `aberto` DESC LIMIT 0 , 5 ");
+            $stmt = $this->p->query("SELECT * FROM `post` P WHERE DATE(`datahora`) BETWEEN DATE_SUB( CURRENT_DATE( ) , INTERVAL 30 DAY ) AND current_date() AND `estado` = 1 ORDER BY `aberto` DESC LIMIT 0 , 5 ");
+            $this->p = null;
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+    
+    public function listTopViewsByWeek() {
+        try {
+            $stmt = $this->p->query("SELECT `data`, url, SUM(cont) AS CONT FROM `visita` V  WHERE `data` BETWEEN DATE_SUB( CURRENT_DATE( ) , INTERVAL 7 DAY ) AND current_date() GROUP BY `url` ORDER BY cont DESC LIMIT 0,5");
             $this->p = null;
             return $stmt;
         } catch (PDOException $exc) {
@@ -450,6 +543,22 @@ class PostDao {
                 LEFT JOIN `autor` A ON P.`autor_idautor` = A.`idautor`
                 WHERE P.`estado` = 1 AND P.`tags` LIKE ? ORDER BY `datahora` DESC");
             $stmt->bindValue(1, "%%" . $tag . "%%");
+
+            $stmt->execute();
+
+            $this->p = NULL;
+
+            return $stmt;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+
+    public function activePosts($datahoraatual) {
+        try {
+            $stmt = $this->p->prepare("UPDATE `post` SET `datahora` = ?,`estado` = 1 WHERE `estado` = 0 AND `agendado` < ?");
+            $stmt->bindValue(1, $datahoraatual);
+            $stmt->bindValue(2, $datahoraatual);
 
             $stmt->execute();
 

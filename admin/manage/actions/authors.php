@@ -35,6 +35,12 @@ function salvaImagem($file) {
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case "add":
+            
+            if($_POST['inputsenha'] !== $_POST['inputconfirmasenha']){
+                echo "Error|Senhas não conferem.";
+                exit;
+            }
+            
             if ($_FILES["inputimg"]["name"] !== "" && isset($_FILES)) {
                 $nomeimg = salvaImagem($_FILES["inputimg"]);
 
@@ -52,10 +58,13 @@ if (isset($_POST['action'])) {
             $idautor = null;
             $imagem = $nomeimg;
             $nome = $_POST['inputnome'];
+            $email = $_POST['inputemail'];
+            $senha = $_POST['inputsenha'];
             $perfil = $_POST['inputperfil'];
+            $facebook_id = $_POST['inputfacebook_id'];
             $estado = 0;
 
-            $a->setAllAtributes($idautor, $imagem, $nome, $perfil, $estado);
+            $a->setAllAtributes($idautor, $imagem, $nome, $email, $senha, $perfil, $facebook_id, $estado);
             $rs = $adao->inserirAutor($a);
 
             if ($rs > 0) {
@@ -63,6 +72,12 @@ if (isset($_POST['action'])) {
             }
             break;
         case "edit":
+            
+            if($_POST['inputsenha'] !== $_POST['inputconfirmasenha']){
+                echo "Error|Senhas não conferem.";
+                exit;
+            }
+            
             if ($_FILES["inputimg"]["name"] !== "" && isset($_FILES)) {
                 $nomeimg = salvaImagem($_FILES["inputimg"]);
 
@@ -80,10 +95,13 @@ if (isset($_POST['action'])) {
             $idautor = $_POST['inputid'];
             $imagem = $nomeimg;
             $nome = $_POST['inputnome'];
+            $email = $_POST['inputemail'];
+            $senha = $_POST['inputsenha'];
             $perfil = $_POST['inputperfil'];
+            $facebook_id = $_POST['inputfacebook_id'];
             $estado = $_POST['inputestado'];
 
-            $a->setAllAtributes($idautor, $imagem, $nome, $perfil, $estado);
+            $a->setAllAtributes($idautor, $imagem, $nome, $email, $senha, $perfil, $facebook_id, $estado);
             $rs = $adao->alterarAutor($a);
 
             if ($rs > 0) {
@@ -117,7 +135,7 @@ if (isset($_POST['action'])) {
 
             $a = $adao->getAutorById($idautor);
 
-            echo "OK|" . $a->getIdautor() . "|" . $a->getImagem() . "|" . $a->getNome() . "|" . $a->getPerfil() . "|" . $a->getEstado();
+            echo "OK|" . $a->getIdautor() . "|" . $a->getImagem() . "|" . $a->getNome() . "|" . $a->getEmail() . "|" . $a->getSenha() . "|" . $a->getPerfil() . "|" . $a->getFacebook_id() . "|" . $a->getEstado();
             break;
         case "changeEstado":
             $idautor = $_POST['id'];

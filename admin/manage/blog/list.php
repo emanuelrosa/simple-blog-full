@@ -34,7 +34,7 @@
 
                 <a href="?bloglist/lto" <?= $lt ?>>Listar todos</a> | 
                 <a href="?bloglist/pb" <?= $pb ?>>Publicados</a> | 
-                <a href="?bloglist/ap" <?= $ap ?>>Aguardand publicação</a>
+                <a href="?bloglist/ap" <?= $ap ?>>Aguardando publicação</a>
                 <br>
                 <br>
             </div>
@@ -84,12 +84,36 @@
                                 <tr id="<?= $row['idpost'] ?>" class="<?= ($row['estado'] === "1") ? "success" : ""; ?>">
                                     <td style="width: 45%"><?= $row['titulo'] ?></td>
                                     <td style="width: 15%" ><?= $row['nomeautor'] ?></td>
-                                    <td style="width: 15%; text-align: center" ><?= $row['nomecategoria'] ?></td>
+                                    <td style="width: 12%; text-align: center" ><?= $row['nomecategoria'] ?></td>
                                     <td style="width: 5%" align="center">
-                                        <span class="fb-comments-count" data-href="<?= $_SERVER['SERVER_NAME'] .'/'. $row['link']; ?>"></span>
+                                        <span class="fb-comments-count" data-href="<?= $_SERVER['SERVER_NAME'] . '/' . $row['link']; ?>"></span>
                                     </td>
-                                    <td style="width: 10%" align="center"><?= date('d/m/Y', strtotime($row['datahora'])) ?> <?= ($row['estado'] === "1") ? '<span class="label label-success">Publicado</span>' : '<span class="label label-default">Rascunho</span>' ?></td>
-                                    <td style="width: 10%" >
+                                    <td style="width: 10%" align="center">
+                                        <div style="font-size: 14px;">
+                                            <?php
+                                            if ($row['estado'] === "1") {
+                                                echo date('d/m/Y', strtotime($row['datahora'])) . '<br>';
+                                                echo '<span class="label label-success">Publicado</span>';
+                                            } else if (!is_null($row['agendado'])) {
+                                                echo '<span class="label label-warning">Agendado : ' . date('d/m/Y', strtotime($row['agendado'])) . '</span><br>';
+                                                echo '<span class="label label-warning">às ' . date('H:i:s', strtotime($row['agendado'])) . '</span>';
+                                                echo '<br>';
+                                            } else if ($row['estado'] === "2") {
+                                                echo date('d/m/Y', strtotime($row['datahora'])) . '<br>';
+                                                echo '<span class="label label-danger">Para Liberar</span>';
+                                            } else {
+                                                echo date('d/m/Y', strtotime($row['datahora'])) . '<br>';
+                                                echo '<span class="label label-default">Rascunho</span>';
+                                            }
+                                            ?>
+                                        </div>
+                                    </td>
+                                    <td style="width: 13%" >
+                                        <?php
+                                        if ($row['estado'] === "1") {
+                                            echo '<a href="' . $actual_site . '/' . $row['link'] . '" target="_blank" class="btn btn-sm btn-info btn-edit"><span class="fa fa-eye" aria-hidden="true"></span></a>';
+                                        }
+                                        ?>
                                         <button class="btn btn-sm btn-info btn-edit" data-id="<?= $row['idpost'] ?>"><span class="fa fa-edit" aria-hidden="true"></span></button>
                                         <button class="btn btn-sm btn-danger btn-remove" data-id="<?= $row['idpost'] ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                                     </td>
